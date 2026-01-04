@@ -87,6 +87,12 @@
             border-bottom:1px solid var(--border);
         }
 
+        /* wenn Menü offen: Header nicht mehr „glasig“ => nichts scheint durch */
+        body.nav-open .site-header{
+            backdrop-filter:none;
+            background:#020310;
+        }
+
         .header-inner{
             display:flex;
             align-items:center;
@@ -102,6 +108,7 @@
             color:var(--text);
         }
 
+        /* ====== LOGO-BADGE (Ring + dunkler Hintergrund + transparentes logo.png) ====== */
         .logo-mark{
             width:40px;height:40px;
             border-radius:var(--radius-full);
@@ -111,18 +118,24 @@
             display:inline-flex;
             align-items:center;
             justify-content:center;
+            flex:0 0 auto;
         }
 
-        .logo-mark-inner{
+        .logo-badge{
             width:100%;height:100%;
             border-radius:var(--radius-full);
             background:#050617;
             display:inline-flex;
             align-items:center;
             justify-content:center;
-            font-family:"Space Grotesk",system-ui,sans-serif;
-            font-size:1.3rem;
-            font-weight:700;
+            padding:6px;
+        }
+
+        .logo-badge img{
+            width:100%;
+            height:100%;
+            object-fit:contain;
+            display:block;
         }
 
         .logo-text{
@@ -203,7 +216,7 @@
         .burger.open span:nth-child(2){ opacity:0; width:0; }
         .burger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
 
-        /* ====== MOBILE NAV (WIE INDEX.HTML) ====== */
+        /* ====== MOBILE NAV (DUNKELBLAU + DECKT ALLES AB) ====== */
         .mobile-nav{
             position:fixed;
             inset:0 0 0 auto;
@@ -290,7 +303,6 @@
 
         .mobile-nav.open{ transform:translateX(0); }
 
-        /* Overlay (deckt alles ab, auch Header) */
         .nav-overlay{
             position:fixed;
             inset:0;
@@ -307,12 +319,6 @@
         }
 
         body.nav-open{ overflow:hidden; }
-
-        /* Header neutralisieren, wenn Menü offen */
-        body.nav-open .site-header{
-            backdrop-filter:none;
-            background:#020310;
-        }
 
         /* ====== BUTTONS ====== */
         .btn{
@@ -463,7 +469,7 @@
             filter: contrast(1.02) saturate(1.05);
         }
 
-        /* volle Darstellung */
+        /* volle Darstellung (contain) */
         .carousel.contain .carousel-slide img{
             object-fit:contain;
             background: rgba(2,3,16,0.75);
@@ -556,7 +562,13 @@
             gap:.7rem;
         }
 
-        .footer-logo-mark{ width:34px; height:34px; }
+        .footer-logo-mark{
+            width:34px; height:34px;
+        }
+
+        .footer-logo-mark .logo-badge{
+            padding:5px;
+        }
 
         .footer-brand-text span{
             display:block;
@@ -637,7 +649,11 @@
     <header class="site-header">
         <div class="container header-inner">
             <a href="index.html#home" class="logo">
-                <span class="logo-mark"><span class="logo-mark-inner">∞</span></span>
+                <span class="logo-mark">
+                    <span class="logo-badge">
+                        <img src="logo.png" alt="Infinity Design Logo">
+                    </span>
+                </span>
                 <span class="logo-text">
                     <span class="logo-title">Infinity Design</span>
                     <small>ENTWICKELT FÜR DEINE VISION</small>
@@ -657,12 +673,17 @@
             </button>
         </div>
 
-        <!-- Mobile-Menü (1:1 wie index.html) -->
+        <!-- Mobile-Menü -->
         <nav class="mobile-nav" id="mobileNav" aria-label="Mobile Navigation">
             <div class="mobile-nav-inner">
+
                 <div class="mobile-top">
                     <a href="index.html#home" class="mobile-logo">
-                        <span class="logo-mark"><span class="logo-mark-inner">∞</span></span>
+                        <span class="logo-mark">
+                            <span class="logo-badge">
+                                <img src="logo.png" alt="Infinity Design Logo">
+                            </span>
+                        </span>
                         <span class="logo-title">Infinity Design</span>
                     </a>
                     <button class="mobile-close" id="mobileClose" aria-label="Menü schließen">✕</button>
@@ -707,6 +728,8 @@
                 </div>
 
                 <div class="examples-grid">
+
+                    <!-- Schaufensterbeklebungen (+ tuerbeklebung.jpg) -->
                     <article class="example-card">
                         <div class="carousel" data-carousel>
                             <div class="carousel-track" data-track>
@@ -715,6 +738,9 @@
                                 </div>
                                 <div class="carousel-slide">
                                     <img src="ticketshop.jpg" alt="Schaufensterbeklebung – Beispiel 2">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="tuerbeklebung.jpg" alt="Schaufenster-/Türbeklebung – Beispiel 3">
                                 </div>
                             </div>
 
@@ -735,14 +761,24 @@
                         </div>
                     </article>
 
+                    <!-- Sticker & Aufkleber (+ autobeklebung2/3 + autobelebung4) -->
                     <article class="example-card">
                         <div class="carousel contain" data-carousel>
                             <div class="carousel-track" data-track>
                                 <div class="carousel-slide">
-                                    <img src="autobeklebung.jpg" alt="Sticker & Aufkleber – Beispiel Autobeklebung">
+                                    <img src="autobeklebung.jpg" alt="Sticker & Aufkleber – Beispiel 1">
                                 </div>
                                 <div class="carousel-slide">
-                                    <img src="aufkleber.jpg" alt="Sticker & Aufkleber – Beispiel Aufkleber">
+                                    <img src="aufkleber.jpg" alt="Sticker & Aufkleber – Beispiel 2">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="autobeklebung2.jpg" alt="Sticker & Aufkleber – Beispiel 3">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="autobeklebung3.jpg" alt="Sticker & Aufkleber – Beispiel 4">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="autobelebung4.jpg" alt="Sticker & Aufkleber – Beispiel 5">
                                 </div>
                             </div>
 
@@ -763,14 +799,18 @@
                         </div>
                     </article>
 
+                    <!-- Team- & Event-Shirts (+ shirtbeklebung2.jpg) -->
                     <article class="example-card">
                         <div class="carousel contain" data-carousel>
                             <div class="carousel-track" data-track>
                                 <div class="carousel-slide">
-                                    <img src="shirtbeklebung.jpg" alt="Team- & Event-Shirts – Beispiel Shirtbeklebung">
+                                    <img src="shirtbeklebung.jpg" alt="Team- & Event-Shirts – Beispiel 1">
                                 </div>
                                 <div class="carousel-slide">
-                                    <img src="pulloverbeklebung.jpg" alt="Team- & Event-Shirts – Beispiel Pulloverbeklebung">
+                                    <img src="pulloverbeklebung.jpg" alt="Team- & Event-Shirts – Beispiel 2">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="shirtbeklebung2.jpg" alt="Team- & Event-Shirts – Beispiel 3">
                                 </div>
                             </div>
 
@@ -790,6 +830,7 @@
                             </div>
                         </div>
                     </article>
+
                 </div>
             </div>
         </section>
@@ -799,7 +840,11 @@
         <div class="container footer-inner">
             <div class="footer-left">
                 <div class="footer-brand">
-                    <span class="logo-mark footer-logo-mark"><span class="logo-mark-inner">∞</span></span>
+                    <span class="logo-mark footer-logo-mark">
+                        <span class="logo-badge">
+                            <img src="logo.png" alt="Infinity Design Logo">
+                        </span>
+                    </span>
                     <div class="footer-brand-text">
                         <span>Infinity Design</span>
                         <small>ENTWICKELT FÜR DEINE VISION</small>
@@ -810,7 +855,7 @@
 
             <div class="footer-right">
                 <nav class="footer-links">
-                    <a href="#home">Startseite</a>
+                    <a href="index.html#home">Startseite</a>
                     <a href="shop.html">Shop</a>
                     <a href="kontakt.html">Kontakt</a>
                     <a href="impressum.html">Impressum</a>
@@ -824,7 +869,7 @@
     </footer>
 
     <script>
-        // ===== Burger-Menü (1:1 wie index.html) =====
+        // ===== Burger-Menü (wie index.html) =====
         const burger = document.getElementById('burger');
         const mobileNav = document.getElementById('mobileNav');
         const navOverlay = document.getElementById('navOverlay');
@@ -860,6 +905,7 @@
                 mobileClose.addEventListener('click', closeNav);
             }
 
+            // ESC schließt
             document.addEventListener('keydown', (e) => {
                 if(e.key === 'Escape') closeNav();
             });
@@ -883,6 +929,7 @@
             let currentX = 0;
             let touching = false;
 
+            // Dots
             if (dotsWrap) {
                 dotsWrap.innerHTML = "";
                 slides.forEach((_, i) => {
@@ -913,6 +960,7 @@
             prevBtn?.addEventListener('click', prev);
             nextBtn?.addEventListener('click', next);
 
+            // Swipe
             carouselEl.addEventListener('touchstart', (e) => {
                 touching = true;
                 startX = e.touches[0].clientX;
