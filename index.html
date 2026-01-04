@@ -90,6 +90,12 @@
             border-bottom:1px solid var(--border);
         }
 
+        /* wenn Menü offen: Header nicht mehr „glasig“ => nichts scheint durch */
+        body.nav-open .site-header{
+            backdrop-filter:none;
+            background:#020310;
+        }
+
         .header-inner{
             display:flex;
             align-items:center;
@@ -105,6 +111,7 @@
             color:var(--text);
         }
 
+        /* ====== LOGO-BADGE (Ring + dunkler Hintergrund + transparentes logo.png) ====== */
         .logo-mark{
             width:40px;height:40px;
             border-radius:var(--radius-full);
@@ -114,18 +121,24 @@
             display:inline-flex;
             align-items:center;
             justify-content:center;
+            flex:0 0 auto;
         }
 
-        .logo-mark-inner{
+        .logo-badge{
             width:100%;height:100%;
             border-radius:var(--radius-full);
-            background:#050617;
+            background:#050617; /* dunkler Hintergrund bleibt */
             display:inline-flex;
             align-items:center;
             justify-content:center;
-            font-family:"Space Grotesk",system-ui,sans-serif;
-            font-size:1.3rem;
-            font-weight:700;
+            padding:6px; /* Abstand zum Ring */
+        }
+
+        .logo-badge img{
+            width:100%;
+            height:100%;
+            object-fit:contain;
+            display:block;
         }
 
         .logo-text{
@@ -217,9 +230,10 @@
             background:linear-gradient(180deg, #0b1030 0%, #020310 100%); /* dunkelblau */
             border-left:1px solid rgba(255,255,255,.10);
             transition:transform .3s ease-in-out;
-            z-index:1001; /* WICHTIG: über Header */
+            z-index:1001; /* über Header */
         }
 
+        /* optionaler Akzent */
         .mobile-nav::before{
             content:"";
             position:absolute;
@@ -294,15 +308,15 @@
 
         .mobile-nav.open{ transform:translateX(0); }
 
-        /* Overlay (deckt alles ab, auch Header) */
+        /* Overlay: deckt alles ab, damit nichts „durchscheint“ */
         .nav-overlay{
             position:fixed;
             inset:0;
-            background:rgba(2, 5, 30, 0.90); /* dunkles Blau -> besser lesbar */
+            background:rgba(2, 5, 30, 0.90);
             opacity:0;
             visibility:hidden;
             transition:opacity .25s ease-out, visibility .25s ease-out;
-            z-index:1000; /* WICHTIG: über Header */
+            z-index:1000; /* über Header */
         }
 
         .nav-overlay.open{
@@ -311,12 +325,6 @@
         }
 
         body.nav-open{ overflow:hidden; }
-
-        /* Header neutralisieren, wenn Menü offen (kein Blur/kein Verlauf) */
-        body.nav-open .site-header{
-            backdrop-filter:none;
-            background:#020310;
-        }
 
         /* ====== HERO ====== */
 
@@ -431,11 +439,11 @@
             justify-content:center;
         }
 
-        /* Logo im Hero Preview (größer) */
         .hero-preview img.hero-logo{
             width:88%;
             height:88%;
             object-fit:contain;
+            display:block;
         }
 
         .hero-caption{
@@ -692,7 +700,14 @@
             gap:.7rem;
         }
 
-        .footer-logo-mark{ width:34px; height:34px; }
+        .footer-logo-mark{
+            width:34px; height:34px;
+        }
+
+        /* Footer-Logo zentriert (fix gegen Verschiebung) */
+        .footer-logo-mark .logo-badge{
+            padding:5px;
+        }
 
         .footer-brand-text span{
             display:block;
@@ -788,7 +803,11 @@
     <header class="site-header">
         <div class="container header-inner">
             <a href="#home" class="logo">
-                <span class="logo-mark"><span class="logo-mark-inner">∞</span></span>
+                <span class="logo-mark">
+                    <span class="logo-badge">
+                        <img src="logo.png" alt="Infinity Design Logo">
+                    </span>
+                </span>
                 <span class="logo-text">
                     <span class="logo-title">Infinity Design</span>
                     <small>ENTWICKELT FÜR DEINE VISION</small>
@@ -814,7 +833,11 @@
 
                 <div class="mobile-top">
                     <a href="#home" class="mobile-logo">
-                        <span class="logo-mark"><span class="logo-mark-inner">∞</span></span>
+                        <span class="logo-mark">
+                            <span class="logo-badge">
+                                <img src="logo.png" alt="Infinity Design Logo">
+                            </span>
+                        </span>
                         <span class="logo-title">Infinity Design</span>
                     </a>
                     <button class="mobile-close" id="mobileClose" aria-label="Menü schließen">✕</button>
@@ -992,7 +1015,11 @@
         <div class="container footer-inner">
             <div class="footer-left">
                 <div class="footer-brand">
-                    <span class="logo-mark footer-logo-mark"><span class="logo-mark-inner">∞</span></span>
+                    <span class="logo-mark footer-logo-mark">
+                        <span class="logo-badge">
+                            <img src="logo.png" alt="Infinity Design Logo">
+                        </span>
+                    </span>
                     <div class="footer-brand-text">
                         <span>Infinity Design</span>
                         <small>ENTWICKELT FÜR DEINE VISION</small>
