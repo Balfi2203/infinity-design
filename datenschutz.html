@@ -90,6 +90,12 @@
             border-bottom:1px solid var(--border);
         }
 
+        /* wenn Menü offen: Header nicht mehr „glasig“ => nichts scheint durch */
+        body.nav-open .site-header{
+            backdrop-filter:none;
+            background:#020310;
+        }
+
         .header-inner{
             display:flex;
             align-items:center;
@@ -105,6 +111,7 @@
             color:var(--text);
         }
 
+        /* ====== LOGO-BADGE (Ring + dunkler Hintergrund + transparentes logo.png) ====== */
         .logo-mark{
             width:40px;height:40px;
             border-radius:var(--radius-full);
@@ -114,18 +121,24 @@
             display:inline-flex;
             align-items:center;
             justify-content:center;
+            flex:0 0 auto;
         }
 
-        .logo-mark-inner{
+        .logo-badge{
             width:100%;height:100%;
             border-radius:var(--radius-full);
-            background:#050617;
+            background:#050617; /* dunkler Hintergrund bleibt */
             display:inline-flex;
             align-items:center;
             justify-content:center;
-            font-family:"Space Grotesk",system-ui,sans-serif;
-            font-size:1.3rem;
-            font-weight:700;
+            padding:6px; /* Abstand zum Ring */
+        }
+
+        .logo-badge img{
+            width:100%;
+            height:100%;
+            object-fit:contain;
+            display:block;
         }
 
         .logo-text{
@@ -217,9 +230,10 @@
             background:linear-gradient(180deg, #0b1030 0%, #020310 100%); /* dunkelblau */
             border-left:1px solid rgba(255,255,255,.10);
             transition:transform .3s ease-in-out;
-            z-index:1001; /* WICHTIG: über Header */
+            z-index:1001; /* über Header */
         }
 
+        /* optionaler Akzent */
         .mobile-nav::before{
             content:"";
             position:absolute;
@@ -294,15 +308,15 @@
 
         .mobile-nav.open{ transform:translateX(0); }
 
-        /* Overlay (deckt alles ab, auch Header) */
+        /* Overlay: deckt alles ab, damit nichts „durchscheint“ */
         .nav-overlay{
             position:fixed;
             inset:0;
-            background:rgba(2, 5, 30, 0.90); /* dunkles Blau -> besser lesbar */
+            background:rgba(2, 5, 30, 0.90);
             opacity:0;
             visibility:hidden;
             transition:opacity .25s ease-out, visibility .25s ease-out;
-            z-index:1000; /* WICHTIG: über Header */
+            z-index:1000; /* über Header */
         }
 
         .nav-overlay.open{
@@ -311,12 +325,6 @@
         }
 
         body.nav-open{ overflow:hidden; }
-
-        /* Header neutralisieren, wenn Menü offen (kein Blur/kein Verlauf) */
-        body.nav-open .site-header{
-            backdrop-filter:none;
-            background:#020310;
-        }
 
         /* ====== HERO ====== */
 
@@ -328,7 +336,7 @@
             gap:2.8rem;
         }
 
-        .hero-text{ max-width:760px; }
+        .hero-text{ max-width:620px; }
 
         .hero-eyebrow{
             margin:0 0 .7rem;
@@ -358,6 +366,13 @@
             font-size:.98rem;
         }
 
+        .hero-actions{
+            display:flex;
+            flex-wrap:wrap;
+            gap:.9rem;
+            margin-bottom:1.4rem;
+        }
+
         /* Buttons */
         .btn{
             position:relative;
@@ -382,6 +397,11 @@
             overflow:hidden;
         }
 
+        .btn-primary:hover{
+            transform:translateY(-1px) scale(1.01);
+            box-shadow:0 22px 60px rgba(0,0,0,.85);
+        }
+
         .btn-glow{
             position:absolute;
             inset:0;
@@ -404,9 +424,13 @@
         /* Sections */
         .section{ padding:3.7rem 0; }
 
+        .section-dark{
+            background:radial-gradient(circle at top,#141634 0,#020310 40%,#000 100%);
+        }
+
         .section-header{
             text-align:center;
-            max-width:640px;
+            max-width:760px;
             margin:0 auto 2.1rem;
         }
 
@@ -443,49 +467,36 @@
             box-shadow:var(--shadow-subtle);
         }
 
-        .card h2{
-            margin:0 0 .8rem;
-            font-size:1.25rem;
-            font-family:"Space Grotesk",system-ui,sans-serif;
-        }
-
-        .card h3{
-            margin:1.25rem 0 .55rem;
-            font-size:1.02rem;
-            font-family:"Space Grotesk",system-ui,sans-serif;
-        }
-
-        .card p{ margin:.3rem 0 .85rem; color:var(--muted); font-size:.92rem; line-height:1.65; }
+        .card h3{ margin:1.2rem 0 .6rem; font-size:1.15rem; }
+        .card p{ margin:0 0 .8rem; color:var(--muted); font-size:.9rem; line-height:1.65; }
 
         .card a{ color:var(--accent); text-decoration:none; }
         .card a:hover{ text-decoration:underline; }
 
-        .clean-list{
+        .card-list{
             list-style:none;
+            margin:0 0 1rem;
             padding:0;
-            margin:.2rem 0 1rem;
             display:grid;
             gap:.35rem;
             font-size:.9rem;
+            color:var(--text);
         }
-        .clean-list li{
-            color:var(--muted);
-        }
-        .clean-list li::before{
+        .card-list li::before{
             content:"•";
             margin-right:.45rem;
             color:var(--accent);
         }
 
-        .notice{
-            margin-top:1rem;
-            padding:.9rem 1rem;
+        .notice-box{
+            margin-top:1.2rem;
+            padding:1rem 1rem;
             border-radius:16px;
             border:1px solid rgba(245,255,91,.35);
             background:radial-gradient(circle at top left, rgba(245,255,91,.12), transparent 65%),
                        rgba(2,3,16,.75);
         }
-        .notice p{ margin:0; color:var(--text); opacity:.9; }
+        .notice-box p{ margin:0; color:var(--text); opacity:.9; }
 
         /* Footer */
         .site-footer{
@@ -506,7 +517,14 @@
             gap:.7rem;
         }
 
-        .footer-logo-mark{ width:34px; height:34px; }
+        .footer-logo-mark{
+            width:34px; height:34px;
+        }
+
+        /* Footer-Logo zentriert (fix gegen Verschiebung) */
+        .footer-logo-mark .logo-badge{
+            padding:5px;
+        }
 
         .footer-brand-text span{
             display:block;
@@ -562,6 +580,16 @@
             .mobile-nav,.nav-overlay{ display:none; }
 
             .hero{ padding-top:6rem; }
+            .hero-inner{
+                grid-template-columns:minmax(0,1.2fr);
+                align-items:center;
+            }
+            .footer-inner{
+                flex-direction:row;
+                align-items:center;
+                justify-content:space-between;
+            }
+            .footer-right{ align-items:flex-end; }
         }
 
         @media (min-width:1024px){
@@ -578,7 +606,11 @@
     <header class="site-header">
         <div class="container header-inner">
             <a href="index.html" class="logo">
-                <span class="logo-mark"><span class="logo-mark-inner">∞</span></span>
+                <span class="logo-mark">
+                    <span class="logo-badge">
+                        <img src="logo.png" alt="Infinity Design Logo">
+                    </span>
+                </span>
                 <span class="logo-text">
                     <span class="logo-title">Infinity Design</span>
                     <small>ENTWICKELT FÜR DEINE VISION</small>
@@ -590,8 +622,6 @@
                     <li><a href="index.html">Startseite</a></li>
                     <li><a href="shop.html">Shop</a></li>
                     <li><a href="kontakt.html">Kontakt</a></li>
-                    <li><a href="impressum.html">Impressum</a></li>
-                    <li><a href="datenschutz.html" class="active">Datenschutz</a></li>
                 </ul>
             </nav>
 
@@ -606,7 +636,11 @@
 
                 <div class="mobile-top">
                     <a href="index.html" class="mobile-logo">
-                        <span class="logo-mark"><span class="logo-mark-inner">∞</span></span>
+                        <span class="logo-mark">
+                            <span class="logo-badge">
+                                <img src="logo.png" alt="Infinity Design Logo">
+                            </span>
+                        </span>
                         <span class="logo-title">Infinity Design</span>
                     </a>
                     <button class="mobile-close" id="mobileClose" aria-label="Menü schließen">✕</button>
@@ -630,26 +664,34 @@
             <div class="container hero-inner">
                 <div class="hero-text">
                     <p class="hero-eyebrow">Rechtliches • DSGVO • Transparenz</p>
-                    <h1 id="hero-title">Datenschutzerklärung <span class="hero-highlight">Infinity Design</span></h1>
+                    <h1 id="hero-title">Datenschutz<span class="hero-highlight">erklärung</span></h1>
                     <p class="hero-subtitle">
-                        Hier informieren wir dich darüber, welche personenbezogenen Daten wir auf dieser Website verarbeiten,
-                        wofür wir sie verwenden und welche Rechte du hast.
+                        Diese Datenschutzerklärung informiert dich darüber, welche personenbezogenen Daten wir auf dieser Website
+                        verarbeiten, zu welchen Zwecken dies geschieht und welche Rechte du hast.
                     </p>
+
+                    <div class="hero-actions">
+                        <a href="kontakt.html" class="btn btn-primary">Kontakt<span class="btn-glow"></span></a>
+                        <a href="impressum.html" class="btn btn-ghost">Impressum</a>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="section" aria-label="Datenschutz Inhalte">
             <div class="container">
-                <article class="card">
-                    <span class="section-pill">Überblick</span>
+                <div class="section-header">
+                    <span class="section-pill">DSGVO</span>
+                    <h2>Informationen zum Datenschutz</h2>
+                    <p>Stand: Januar 2026</p>
+                </div>
 
+                <article class="card">
                     <h3>1. Verantwortlicher</h3>
                     <p>
-                        Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:<br>
                         <strong>Infinity Design</strong><br>
                         Inhaber: Jermaine Richter<br>
-                        Alte Lauinger Straße 7, 89423 Gundelfingen an der Donau, Deutschland<br>
+                        Alte Lauinger Straße 7, 89423 Gundelfingen an der Donau<br>
                         Telefon: 0170/3203136<br>
                         E-Mail: <a href="mailto:InfinityDesign24@outlook.de">InfinityDesign24@outlook.de</a><br>
                         Steuernummer: 109/632/01422
@@ -658,150 +700,119 @@
                     <h3>2. Allgemeine Hinweise zur Datenverarbeitung</h3>
                     <p>
                         Wir verarbeiten personenbezogene Daten nur, soweit dies zur Bereitstellung einer funktionsfähigen Website,
-                        zur Kommunikation, zur Erfüllung von Verträgen oder aufgrund gesetzlicher Pflichten erforderlich ist.
-                        Rechtsgrundlagen sind insbesondere Art. 6 Abs. 1 lit. b (Vertrag/Anbahnung), lit. c (rechtliche Pflicht)
-                        und lit. f DSGVO (berechtigtes Interesse).
+                        zur Kommunikation, zur Vertragsabwicklung oder aufgrund gesetzlicher Pflichten erforderlich ist.
+                        Rechtsgrundlagen sind insbesondere Art. 6 Abs. 1 lit. b DSGVO (Vertrag/Anbahnung), lit. c DSGVO
+                        (rechtliche Pflicht) und lit. f DSGVO (berechtigtes Interesse).
                     </p>
 
                     <h3>3. Hosting & Server-Logfiles</h3>
                     <p>
-                        Beim Aufruf unserer Website werden durch den Hosting-Provider automatisch Informationen in sogenannten
-                        Server-Logfiles erhoben und gespeichert. Dies sind z. B.:
+                        Beim Besuch unserer Website werden durch den Hosting-Provider automatisch Informationen in sogenannten
+                        Server-Logfiles erfasst. Dies kann u. a. umfassen:
                     </p>
-                    <ul class="clean-list">
-                        <li>IP-Adresse (ggf. in gekürzter/teilanonymisierter Form, je nach Provider)</li>
-                        <li>Datum und Uhrzeit der Anfrage</li>
+                    <ul class="card-list">
+                        <li>IP-Adresse</li>
+                        <li>Datum und Uhrzeit des Zugriffs</li>
                         <li>aufgerufene Seite/Datei</li>
-                        <li>Browsertyp/-version, Betriebssystem</li>
+                        <li>Browsertyp/-version und Betriebssystem</li>
                         <li>Referrer-URL (zuvor besuchte Seite)</li>
                     </ul>
                     <p>
-                        Zweck ist die technische Auslieferung der Website, Stabilität, Sicherheit (z. B. Abwehr von Angriffen)
-                        und Fehleranalyse. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
-                        Logdaten werden in der Regel für einen begrenzten Zeitraum gespeichert und anschließend gelöscht,
-                        sofern keine sicherheitsrelevante Aufbewahrung erforderlich ist.
+                        Die Verarbeitung erfolgt zur technischen Bereitstellung, zur Sicherheit und zur Fehleranalyse.
+                        Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
                     </p>
 
-                    <h3>4. Kontaktaufnahme (E-Mail/Telefon/Kontaktformular)</h3>
+                    <h3>4. Kontaktaufnahme</h3>
                     <p>
                         Wenn du uns per E-Mail, Telefon oder über ein Kontaktformular kontaktierst, verarbeiten wir die von dir
                         übermittelten Daten (z. B. Name, E-Mail, Nachricht), um deine Anfrage zu bearbeiten.
                         Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung/Erfüllung) bzw. Art. 6 Abs. 1 lit. f DSGVO
                         (berechtigtes Interesse an der Beantwortung).
                     </p>
+
+                    <h3>5. Vertragsabwicklung / Shop (falls genutzt)</h3>
                     <p>
-                        Die Daten werden gelöscht, sobald sie für den Zweck der Bearbeitung nicht mehr erforderlich sind und
-                        keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
+                        Wenn du über unseren Shop Produkte anfragst oder bestellst, verarbeiten wir die dafür erforderlichen Daten
+                        (z. B. Name, Anschrift, Kontakt- und Bestelldaten). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.
+                        Gesetzliche Aufbewahrungspflichten (z. B. Handels-/Steuerrecht) bleiben unberührt.
                     </p>
 
-                    <h3>5. Shop / Vertragsabwicklung (falls du bei uns bestellst)</h3>
+                    <h3>6. Cookies</h3>
                     <p>
-                        Wenn du über unseren Shop Produkte anfragst oder bestellst, verarbeiten wir personenbezogene Daten,
-                        die zur Vertragsabwicklung erforderlich sind (z. B. Name, Anschrift, Kontakt- und Bestelldaten).
-                        Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.
-                    </p>
-                    <p>
-                        Soweit wir Dienstleister einsetzen (z. B. Zahlungsanbieter, Versanddienstleister, Hosting/IT),
-                        erhalten diese Daten nur, soweit es für die jeweilige Leistung erforderlich ist (Auftragsverarbeitung).
-                        Bei gesetzlichen Aufbewahrungspflichten (z. B. Handels-/Steuerrecht) erfolgt die Speicherung entsprechend
-                        der Vorgaben.
+                        Diese Website kann technisch notwendige Cookies einsetzen, um grundlegende Funktionen bereitzustellen.
+                        Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+                        Sofern künftig nicht notwendige Cookies (z. B. Analyse/Marketing) eingesetzt werden, erfolgt dies nur mit
+                        Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) über ein Cookie-Banner.
                     </p>
 
-                    <h3>6. Cookies & ähnliche Technologien</h3>
+                    <h3>7. Social Media Links</h3>
                     <p>
-                        Unsere Website kann technisch notwendige Cookies einsetzen, um grundlegende Funktionen bereitzustellen.
-                        Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der technischen Bereitstellung).
-                    </p>
-                    <p>
-                        Soweit wir in Zukunft nicht-notwendige Cookies (z. B. Analyse/Marketing) einsetzen, erfolgt dies nur mit
-                        deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) über ein Cookie-Banner.
+                        Wir verlinken auf externe Profile (z. B. Instagram). Beim Anklicken des Links können Daten an den jeweiligen
+                        Anbieter übermittelt werden. Für die dortige Verarbeitung ist der jeweilige Anbieter verantwortlich.
                     </p>
 
-                    <h3>7. Webanalyse / Tracking</h3>
+                    <h3>8. Empfänger von Daten</h3>
                     <p>
-                        Aktuell setzen wir <strong>keine</strong> Webanalyse- oder Tracking-Tools (z. B. Google Analytics) ein.
-                        Sollten wir solche Tools zukünftig einsetzen, informieren wir dich hier und holen – sofern erforderlich –
-                        vorher deine Einwilligung ein.
+                        Wir geben personenbezogene Daten nur weiter, wenn dies zur Vertragsabwicklung erforderlich ist, eine
+                        gesetzliche Pflicht besteht oder du eingewilligt hast. Mögliche Empfänger sind z. B. Hosting-/IT-Dienstleister,
+                        Zahlungs- und Versanddienstleister (bei Bestellungen).
                     </p>
 
-                    <h3>8. Social Media – Instagram</h3>
+                    <h3>9. Speicherdauer</h3>
                     <p>
-                        Auf unserer Website verlinken wir zu unserem Instagram-Profil.
-                        Wenn du dem Link folgst, werden Daten an Instagram/Meta übermittelt.
-                        Verantwortlicher für die Datenverarbeitung auf Instagram ist der jeweilige Betreiber.
-                    </p>
-                    <p>
-                        Hinweis: Wenn wir nur einen normalen Link verwenden (keine eingebetteten Inhalte), findet eine Übermittlung
-                        an Instagram erst statt, wenn du den Link aktiv anklickst.
+                        Wir speichern personenbezogene Daten nur so lange, wie dies für die jeweiligen Zwecke erforderlich ist oder
+                        gesetzliche Aufbewahrungspflichten bestehen. Danach werden die Daten gelöscht oder gesperrt.
                     </p>
 
-                    <h3>9. Eingebettete Inhalte (z. B. Videos, Karten)</h3>
-                    <p>
-                        Falls wir Inhalte von Drittanbietern (z. B. YouTube, Google Maps) einbetten, kann beim Laden der Einbettung
-                        deine IP-Adresse an den Drittanbieter übermittelt werden. Solche Einbettungen nutzen wir – falls eingesetzt –
-                        möglichst datenschutzfreundlich bzw. erst nach Einwilligung.
-                    </p>
-
-                    <h3>10. Empfänger von Daten</h3>
-                    <p>
-                        Wir geben personenbezogene Daten nur weiter, wenn dies erforderlich ist (z. B. zur Vertragsabwicklung),
-                        eine gesetzliche Pflicht besteht oder du eingewilligt hast.
-                        Mögliche Empfänger sind Hosting-/IT-Dienstleister, Zahlungs- und Versanddienstleister (bei Bestellungen).
-                    </p>
-
-                    <h3>11. Speicherdauer</h3>
-                    <p>
-                        Wir speichern personenbezogene Daten nur so lange, wie es für die jeweiligen Zwecke erforderlich ist
-                        oder gesetzliche Aufbewahrungspflichten bestehen. Danach werden die Daten gelöscht oder gesperrt.
-                    </p>
-
-                    <h3>12. Deine Rechte</h3>
+                    <h3>10. Deine Rechte</h3>
                     <p>Du hast nach der DSGVO insbesondere folgende Rechte:</p>
-                    <ul class="clean-list">
+                    <ul class="card-list">
                         <li>Auskunft (Art. 15 DSGVO)</li>
                         <li>Berichtigung (Art. 16 DSGVO)</li>
                         <li>Löschung (Art. 17 DSGVO)</li>
                         <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
                         <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
-                        <li>Widerspruch gegen Verarbeitungen auf Basis berechtigter Interessen (Art. 21 DSGVO)</li>
-                        <li>Widerruf einer Einwilligung jederzeit (Art. 7 Abs. 3 DSGVO)</li>
+                        <li>Widerspruch (Art. 21 DSGVO)</li>
+                        <li>Widerruf von Einwilligungen (Art. 7 Abs. 3 DSGVO)</li>
                     </ul>
                     <p>
                         Zur Ausübung deiner Rechte genügt eine Nachricht an:
                         <a href="mailto:InfinityDesign24@outlook.de">InfinityDesign24@outlook.de</a>.
                     </p>
 
-                    <h3>13. Beschwerderecht bei der Aufsichtsbehörde</h3>
+                    <h3>11. Beschwerderecht bei der Aufsichtsbehörde</h3>
                     <p>
                         Du hast das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren (Art. 77 DSGVO).
                         Für Bayern ist dies regelmäßig das <strong>Bayerische Landesamt für Datenschutzaufsicht (BayLDA)</strong>.
                     </p>
 
-                    <h3>14. Datensicherheit / SSL-Verschlüsselung</h3>
+                    <h3>12. Datensicherheit / SSL-Verschlüsselung</h3>
                     <p>
                         Wir treffen technische und organisatorische Maßnahmen, um deine Daten zu schützen.
-                        Wenn unsere Website über HTTPS erreichbar ist, werden Daten verschlüsselt übertragen (SSL/TLS).
+                        Sofern diese Website über HTTPS erreichbar ist, werden Daten verschlüsselt übertragen (SSL/TLS).
                     </p>
 
-                    <h3>15. Änderungen dieser Datenschutzerklärung</h3>
+                    <h3>13. Änderungen dieser Datenschutzerklärung</h3>
                     <p>
                         Wir können diese Datenschutzerklärung anpassen, wenn sich unsere Website, Prozesse oder Rechtslagen ändern.
                         Es gilt die jeweils aktuelle Version auf dieser Seite.
                     </p>
 
-                    <h3>16. Umsetzung der Website</h3>
+                    <h3>14. Umsetzung der Website</h3>
                     <p>
                         Die technische und gestalterische Umsetzung dieser Website erfolgte durch:<br>
                         <strong>Fischer Leopold, Graf von Ballestrem Alexander GbR</strong>
                     </p>
                     <p>
-                        Die genannte GbR hat im Rahmen der Umsetzung keinen eigenständigen Zugriff auf personenbezogene
-                        Daten der Websitebesucher. Eine Verarbeitung personenbezogener Daten erfolgt ausschließlich
-                        durch den Verantwortlichen dieser Website.
+                        Die genannte GbR hat im Rahmen der Umsetzung keinen eigenständigen Zugriff auf personenbezogene Daten
+                        der Websitebesucher. Eine Verarbeitung personenbezogener Daten erfolgt ausschließlich durch den
+                        Verantwortlichen dieser Website.
                     </p>
 
-                    <div class="notice">
-                        <p><strong>Stand:</strong> Januar 2026</p>
+                    <div class="notice-box">
+                        <p><strong>Hinweis:</strong> Wenn du Fragen zum Datenschutz hast, schreibe uns jederzeit an
+                            <a href="mailto:InfinityDesign24@outlook.de">InfinityDesign24@outlook.de</a>.
+                        </p>
                     </div>
                 </article>
             </div>
@@ -812,7 +823,11 @@
         <div class="container footer-inner">
             <div class="footer-left">
                 <div class="footer-brand">
-                    <span class="logo-mark footer-logo-mark"><span class="logo-mark-inner">∞</span></span>
+                    <span class="logo-mark footer-logo-mark">
+                        <span class="logo-badge">
+                            <img src="logo.png" alt="Infinity Design Logo">
+                        </span>
+                    </span>
                     <div class="footer-brand-text">
                         <span>Infinity Design</span>
                         <small>ENTWICKELT FÜR DEINE VISION</small>
