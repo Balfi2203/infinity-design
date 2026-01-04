@@ -108,6 +108,12 @@
             border-bottom: 1px solid var(--border);
         }
 
+        /* Header neutralisieren, wenn Menü offen (wie index.html) */
+        body.nav-open .site-header{
+            backdrop-filter:none;
+            background:#020310;
+        }
+
         .header-inner {
             display: flex;
             align-items: center;
@@ -123,6 +129,7 @@
             color: var(--text);
         }
 
+        /* ====== LOGO-BADGE (Ring + dunkler Hintergrund + transparentes logo.png) ====== */
         .logo-mark {
             width: 40px;
             height: 40px;
@@ -139,9 +146,10 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            flex: 0 0 auto;
         }
 
-        .logo-mark-inner {
+        .logo-badge{
             width: 100%;
             height: 100%;
             border-radius: var(--radius-full);
@@ -149,9 +157,14 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-family: "Space Grotesk", system-ui, sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
+            padding: 6px;
+        }
+
+        .logo-badge img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
         }
 
         .logo-text {
@@ -217,7 +230,8 @@
             color: var(--text);
         }
 
-        /* Burger */
+        /* Burger-Menü */
+
         .burger {
             border: none;
             background: transparent;
@@ -252,124 +266,108 @@
 
         /* ====== MOBILE NAV (WIE INDEX.HTML) ====== */
 
-        .mobile-nav {
-            position: fixed;
-            inset: 0 0 0 auto;
-            width: 78%;
-            max-width: 330px;
-            transform: translateX(100%);
-            background: linear-gradient(180deg, #0b1030 0%, #020310 100%);
-            border-left: 1px solid rgba(255, 255, 255, 0.10);
-            transition: transform 0.3s ease-in-out;
-            z-index: 1001;
+        .mobile-nav{
+            position:fixed;
+            inset:0 0 0 auto;
+            width:78%;
+            max-width:330px;
+            transform:translateX(100%);
+            background:linear-gradient(180deg, #0b1030 0%, #020310 100%);
+            border-left:1px solid rgba(255,255,255,.10);
+            transition:transform .3s ease-in-out;
+            z-index:1001;
         }
 
-        .mobile-nav::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at top left, rgba(245, 255, 91, 0.12), transparent 55%);
-            pointer-events: none;
+        .mobile-nav::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:radial-gradient(circle at top left, rgba(245,255,91,.12), transparent 55%);
+            pointer-events:none;
         }
 
-        .mobile-nav-inner {
-            position: relative;
-            height: 100%;
-            padding: 1.4rem 1.5rem 1.7rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            gap: 1.4rem;
+        .mobile-nav-inner{
+            position:relative;
+            height:100%;
+            padding:1.4rem 1.5rem 1.7rem;
+            display:flex;
+            flex-direction:column;
+            justify-content:flex-start;
+            gap:1.4rem;
         }
 
-        .mobile-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
+        .mobile-top{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
         }
 
-        .mobile-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text);
-            text-decoration: none;
-            margin-bottom: 0;
+        .mobile-logo{
+            display:flex;
+            align-items:center;
+            gap:.75rem;
+            color:var(--text);
+            text-decoration:none;
+            margin-bottom:0;
         }
 
-        .mobile-logo .logo-title {
-            font-size: 0.95rem;
+        .mobile-logo .logo-title{ font-size:.95rem; }
+
+        .mobile-close{
+            border:none;
+            background:rgba(255,255,255,.07);
+            color:#fff;
+            width:44px;
+            height:44px;
+            border-radius:999px;
+            font-size:1.2rem;
+            cursor:pointer;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .mobile-close:hover{
+            background:rgba(245,255,91,.12);
         }
 
-        .mobile-close {
-            border: none;
-            background: rgba(255, 255, 255, 0.07);
-            color: #fff;
-            width: 44px;
-            height: 44px;
-            border-radius: 999px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+        .mobile-nav ul{
+            list-style:none;
+            margin:0;
+            padding:0;
+            display:flex;
+            flex-direction:column;
+            gap:1.25rem;
         }
 
-        .mobile-close:hover {
-            background: rgba(245, 255, 91, 0.12);
+        .mobile-nav a{
+            color:var(--text);
+            text-decoration:none;
+            font-size:.9rem;
+            letter-spacing:.18em;
+            text-transform:uppercase;
         }
 
-        .mobile-nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
+        .mobile-nav a:hover{ color:var(--accent); }
+
+        .mobile-nav.open{ transform:translateX(0); }
+
+        .nav-overlay{
+            position:fixed;
+            inset:0;
+            background:rgba(2, 5, 30, 0.90);
+            opacity:0;
+            visibility:hidden;
+            transition:opacity .25s ease-out, visibility .25s ease-out;
+            z-index:1000;
         }
 
-        .mobile-nav a {
-            color: var(--text);
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
+        .nav-overlay.open{
+            opacity:1;
+            visibility:visible;
         }
 
-        .mobile-nav a:hover {
-            color: var(--accent);
-        }
-
-        .mobile-nav.open {
-            transform: translateX(0);
-        }
-
-        /* Overlay (deckt alles ab, auch Header) */
-        .nav-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(2, 5, 30, 0.90);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.25s ease-out, visibility 0.25s ease-out;
-            z-index: 1000;
-        }
-
-        .nav-overlay.open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        body.nav-open {
-            overflow: hidden;
-        }
-
-        /* Header neutralisieren, wenn Menü offen */
-        body.nav-open .site-header {
-            backdrop-filter: none;
-            background: #020310;
-        }
+        body.nav-open{ overflow:hidden; }
 
         /* ====== BUTTONS ====== */
 
@@ -472,6 +470,14 @@
             font-size: 0.98rem;
         }
 
+        /* ✅ Abstand zwischen den Buttons (wie gewünscht) */
+        .contact-actions{
+            display:flex;
+            flex-wrap:wrap;
+            gap:0.9rem;          /* <-- Abstand zwischen den Buttons */
+            margin-bottom:1.4rem;
+        }
+
         .contact-meta {
             display: grid;
             gap: 0.8rem;
@@ -517,7 +523,6 @@
             margin-bottom: 1rem;
         }
 
-        /* Bild größer */
         .avatar {
             width: 88px;
             height: 88px;
@@ -537,7 +542,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center top; /* Kopf nicht abschneiden */
+            object-position: center top;
             display: block;
         }
 
@@ -736,6 +741,11 @@
             height: 34px;
         }
 
+        /* Footer-Logo etwas zentrierter */
+        .footer-logo-mark .logo-badge{
+            padding: 5px;
+        }
+
         .footer-brand-text span {
             display: block;
             font-size: 0.94rem;
@@ -833,7 +843,9 @@
         <div class="container header-inner">
             <a href="index.html#home" class="logo">
                 <span class="logo-mark">
-                    <span class="logo-mark-inner">∞</span>
+                    <span class="logo-badge">
+                        <img src="logo.png" alt="Infinity Design Logo">
+                    </span>
                 </span>
                 <span class="logo-text">
                     <span class="logo-title">Infinity Design</span>
@@ -858,13 +870,17 @@
             </button>
         </div>
 
-        <!-- Mobile-Menü (wie index.html) -->
+        <!-- Mobile-Menü -->
         <nav class="mobile-nav" id="mobileNav" aria-label="Mobile Navigation">
             <div class="mobile-nav-inner">
 
                 <div class="mobile-top">
                     <a href="index.html#home" class="mobile-logo">
-                        <span class="logo-mark"><span class="logo-mark-inner">∞</span></span>
+                        <span class="logo-mark">
+                            <span class="logo-badge">
+                                <img src="logo.png" alt="Infinity Design Logo">
+                            </span>
+                        </span>
                         <span class="logo-title">Infinity Design</span>
                     </a>
                     <button class="mobile-close" id="mobileClose" aria-label="Menü schließen">✕</button>
@@ -1078,7 +1094,9 @@
             <div class="footer-left">
                 <div class="footer-brand">
                     <span class="logo-mark footer-logo-mark">
-                        <span class="logo-mark-inner">∞</span>
+                        <span class="logo-badge">
+                            <img src="logo.png" alt="Infinity Design Logo">
+                        </span>
                     </span>
                     <div class="footer-brand-text">
                         <span>Infinity Design</span>
@@ -1092,11 +1110,9 @@
 
             <div class="footer-right">
                 <nav class="footer-links">
-                    <a href="#home">Startseite</a>
+                    <a href="index.html#home">Startseite</a>
                     <a href="shop.html">Shop</a>
                     <a href="kontakt.html">Kontakt</a>
-                    <a href="impressum.html">Impressum</a>
-                    <a href="datenschutz.html">Datenschutz</a>
                 </nav>
                 <div class="footer-social">
                     <a href="https://www.instagram.com/infinitydesign.werbung/" target="_blank" rel="noopener noreferrer">
@@ -1113,47 +1129,45 @@
         const navOverlay = document.getElementById('navOverlay');
         const mobileClose = document.getElementById('mobileClose');
 
-        function closeNav() {
+        function closeNav(){
             burger.classList.remove('open');
-            burger.setAttribute('aria-expanded', 'false');
+            burger.setAttribute('aria-expanded','false');
             mobileNav.classList.remove('open');
             navOverlay.classList.remove('open');
             document.body.classList.remove('nav-open');
         }
 
-        function openNav() {
+        function openNav(){
             burger.classList.add('open');
-            burger.setAttribute('aria-expanded', 'true');
+            burger.setAttribute('aria-expanded','true');
             mobileNav.classList.add('open');
             navOverlay.classList.add('open');
             document.body.classList.add('nav-open');
         }
 
-        if (burger && mobileNav && navOverlay) {
+        if(burger && mobileNav && navOverlay){
             burger.addEventListener('click', () => {
                 const isOpen = mobileNav.classList.contains('open');
-                if (isOpen) closeNav();
+                if(isOpen) closeNav();
                 else openNav();
             });
 
             navOverlay.addEventListener('click', closeNav);
             mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
 
-            if (mobileClose) {
+            if(mobileClose){
                 mobileClose.addEventListener('click', closeNav);
             }
 
             // ESC schließt
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') closeNav();
+                if(e.key === 'Escape') closeNav();
             });
         }
 
         // Jahr im Footer
         const yearSpan = document.getElementById('year');
-        if (yearSpan) {
-            yearSpan.textContent = new Date().getFullYear();
-        }
+        if(yearSpan) yearSpan.textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
