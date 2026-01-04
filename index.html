@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Infinity Design – Entwickelt für deine Vision</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ====== BASE ====== */
+
+        *,
+        *::before,
+        *::after { box-sizing: border-box; }
+
+        :root{
+            --bg:#020310;
+            --bg-alt:#07081a;
+            --bg-deep:#02020a;
+            --accent:#f5ff5b;
+            --accent-soft:rgba(245,255,91,.16);
+            --accent-2:#ff4f93;
+            --accent-3:#4fffea;
+            --text:#f9fafb;
+            --muted:#9ca3af;
+            --border:rgba(255,255,255,.09);
+            --radius-lg:20px;
+            --radius-xl:26px;
+            --radius-full:999px;
+            --shadow-soft:0 18px 50px rgba(0,0,0,.75);
+            --shadow-subtle:0 10px 30px rgba(0,0,0,.5);
+        }
+
+        html,body{
+            margin:0;
+            padding:0;
+            min-height:100%;
+            scroll-behavior:smooth;
+        }
+
+        body{
+            font-family:"Poppins",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+            color:var(--text);
+            background:radial-gradient(circle at top,#181a40 0,#020310 50%,#000 100%);
+            overflow-x:hidden;
+        }
+
+        .container{
+            max-width:1160px;
+            margin:0 auto;
+            padding:0 1.6rem;
+        }
+
+        /* ====== BACKGROUND ORBITS ====== */
+
+        .bg-orbit{
+            position:fixed;
+            z-index:-1;
+            border-radius:50%;
+            filter:blur(22px);
+            opacity:.7;
+            pointer-events:none;
+        }
+        .bg-orbit-1{
+            width:420px;height:420px;
+            background:radial-gradient(circle,rgba(245,255,91,.28),transparent 60%);
+            top:-120px;left:-100px;
+        }
+        .bg-orbit-2{
+            width:380px;height:380px;
+            background:radial-gradient(circle,rgba(79,255,234,.22),transparent 60%);
+            bottom:-140px;right:-80px;
+        }
+        .bg-orbit-3{
+            width:260px;height:260px;
+            background:radial-gradient(circle,rgba(255,79,147,.32),transparent 60%);
+            top:40%;right:10%;
+        }
+
+        /* ====== HEADER & NAV ====== */
+
+        .site-header{
+            position:sticky;
+            top:0;
+            z-index:100;
+            backdrop-filter:blur(22px);
+            background:linear-gradient(to bottom,rgba(2,3,16,.95),rgba(2,3,16,.82),transparent);
+            border-bottom:1px solid var(--border);
+        }
+
+        .header-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:.75rem 0;
+        }
+
+        .logo{
+            display:flex;
+            align-items:center;
+            gap:.8rem;
+            text-decoration:none;
+            color:var(--text);
+        }
+
+        .logo-mark{
+            width:40px;height:40px;
+            border-radius:var(--radius-full);
+            padding:2px;
+            background:conic-gradient(from 220deg,var(--accent),var(--accent-2),var(--accent-3),var(--accent));
+            box-shadow:0 0 24px rgba(245,255,91,.5);
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .logo-mark-inner{
+            width:100%;height:100%;
+            border-radius:var(--radius-full);
+            background:#050617;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            font-family:"Space Grotesk",system-ui,sans-serif;
+            font-size:1.3rem;
+            font-weight:700;
+        }
+
+        .logo-text{
+            display:flex;
+            flex-direction:column;
+            line-height:1.1;
+        }
+
+        .logo-title{
+            font-family:"Space Grotesk",system-ui,sans-serif;
+            font-weight:600;
+            font-size:1.05rem;
+            letter-spacing:.06em;
+            text-transform:uppercase;
+        }
+
+        .logo-text small{
+            font-size:.7rem;
+            color:var(--muted);
+        }
+
+        .main-nav{ display:none; }
+
+        .nav-links{
+            list-style:none;
+            display:flex;
+            gap:2rem;
+            margin:0;
+            padding:0;
+        }
+
+        .nav-links a{
+            text-decoration:none;
+            color:var(--muted);
+            font-size:.9rem;
+            letter-spacing:.16em;
+            text-transform:uppercase;
+            position:relative;
+            padding-bottom:.35rem;
+        }
+
+        .nav-links a::after{
+            content:"";
+            position:absolute;
+            left:0;bottom:0;
+            height:2px;width:0;
+            background:linear-gradient(90deg,var(--accent),var(--accent-2));
+            border-radius:999px;
+            transition:width .18s ease-out;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after{ width:100%; }
+
+        .nav-links a:hover,
+        .nav-links a.active{ color:var(--text); }
+
+        /* Burger */
+        .burger{
+            border:none;
+            background:transparent;
+            display:flex;
+            flex-direction:column;
+            gap:5px;
+            cursor:pointer;
+            padding:.35rem;
+        }
+
+        .burger span{
+            display:block;
+            width:22px;height:2px;
+            background:var(--text);
+            border-radius:var(--radius-full);
+            transition:transform .25s ease, opacity .25s ease, width .25s ease;
+        }
+
+        .burger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+        .burger.open span:nth-child(2){ opacity:0; width:0; }
+        .burger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+        /* ====== MOBILE NAV (DUNKELBLAU + DECKT ALLES AB) ====== */
+
+        .mobile-nav{
+            position:fixed;
+            inset:0 0 0 auto;
+            width:78%;
+            max-width:330px;
+            transform:translateX(100%);
+            background:linear-gradient(180deg, #0b1030 0%, #020310 100%); /* dunkelblau */
+            border-left:1px solid rgba(255,255,255,.10);
+            transition:transform .3s ease-in-out;
+            z-index:1001; /* WICHTIG: über Header */
+        }
+
+        .mobile-nav::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:radial-gradient(circle at top left, rgba(245,255,91,.12), transparent 55%);
+            pointer-events:none;
+        }
+
+        .mobile-nav-inner{
+            position:relative;
+            height:100%;
+            padding:1.4rem 1.5rem 1.7rem;
+            display:flex;
+            flex-direction:column;
+            justify-content:flex-start;
+            gap:1.4rem;
+        }
+
+        .mobile-top{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+
+        .mobile-logo{
+            display:flex;
+            align-items:center;
+            gap:.75rem;
+            color:var(--text);
+            text-decoration:none;
+            margin-bottom:0;
+        }
+
+        .mobile-logo .logo-title{ font-size:.95rem; }
+
+        .mobile-close{
+            border:none;
+            background:rgba(255,255,255,.07);
+            color:#fff;
+            width:44px;
+            height:44px;
+            border-radius:999px;
+            font-size:1.2rem;
+            cursor:pointer;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .mobile-close:hover{
+            background:rgba(245,255,91,.12);
+        }
+
+        .mobile-nav ul{
+            list-style:none;
+            margin:0;
+            padding:0;
+            display:flex;
+            flex-direction:column;
+            gap:1.25rem;
+        }
+
+        .mobile-nav a{
+            color:var(--text);
+            text-decoration:none;
+            font-size:.9rem;
+            letter-spacing:.18em;
+            text-transform:uppercase;
+        }
+
+        .mobile-nav a:hover{ color:var(--accent); }
+
+        .mobile-nav.open{ transform:translateX(0); }
+
+        /* Overlay (deckt alles ab, auch Header) */
+        .nav-overlay{
+            position:fixed;
+            inset:0;
+            background:rgba(2, 5, 30, 0.90); /* dunkles Blau -> besser lesbar */
+            opacity:0;
+            visibility:hidden;
+            transition:opacity .25s ease-out, visibility .25s ease-out;
+            z-index:1000; /* WICHTIG: über Header */
+        }
+
+        .nav-overlay.open{
+            opacity:1;
+            visibility:visible;
+        }
+
+        body.nav-open{ overflow:hidden; }
+
+        /* Header neutralisieren, wenn Menü offen (kein Blur/kein Verlauf) */
+        body.nav-open .site-header{
+            backdrop-filter:none;
+            background:#020310;
+        }
+
+        /* ====== HERO ====== */
+
+        .hero{ padding:5.5rem 0 4.2rem; }
+
+        .hero-inner{
+            display:grid;
+            grid-template-columns:minmax(0,1.2fr);
+            gap:2.8rem;
+        }
+
+        .hero-text{ max-width:620px; }
+
+        .hero-eyebrow{
+            margin:0 0 .7rem;
+            text-transform:uppercase;
+            letter-spacing:.28em;
+            font-size:.75rem;
+            color:var(--muted);
+        }
+
+        .hero h1{
+            margin:0 0 .9rem;
+            font-size:clamp(2.4rem,6vw,3.5rem);
+            font-family:"Space Grotesk",system-ui,sans-serif;
+            line-height:1.05;
+        }
+
+        .hero-highlight{
+            background:linear-gradient(120deg,var(--accent),var(--accent-2),var(--accent-3));
+            -webkit-background-clip:text;
+            background-clip:text;
+            color:transparent;
+        }
+
+        .hero-subtitle{
+            margin:0 0 1.6rem;
+            color:var(--muted);
+            font-size:.98rem;
+        }
+
+        .hero-actions{
+            display:flex;
+            flex-wrap:wrap;
+            gap:.9rem;
+            margin-bottom:1.4rem;
+        }
+
+        .hero-meta{
+            display:grid;
+            gap:.75rem;
+        }
+
+        .meta-item{
+            padding:.55rem .9rem;
+            border-radius:var(--radius-lg);
+            border:1px solid rgba(255,255,255,.04);
+            background:radial-gradient(circle at top left, rgba(245,255,91,.06), transparent 65%),
+                       rgba(2,3,16,.85);
+            display:flex;
+            flex-direction:column;
+            gap:.1rem;
+            max-width:280px;
+        }
+
+        .meta-label{
+            font-size:.72rem;
+            text-transform:uppercase;
+            letter-spacing:.16em;
+            color:var(--accent);
+        }
+
+        .meta-value{
+            font-size:.86rem;
+            color:var(--text);
+        }
+
+        /* Hero Visual */
+        .hero-visual{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .hero-card{
+            position:relative;
+            width:100%;
+            max-width:400px;
+            animation:float 12s ease-in-out infinite alternate;
+        }
+
+        .hero-card-inner{
+            border-radius:var(--radius-xl);
+            background:radial-gradient(circle at top left, rgba(245,255,91,.32), transparent 70%),
+                       linear-gradient(140deg,#181a3a,#060618);
+            padding:.9rem;
+            border:1px solid rgba(245,255,91,.35);
+            box-shadow:var(--shadow-soft);
+        }
+
+        .hero-preview{
+            height:230px;
+            border-radius:calc(var(--radius-xl) - 6px);
+            overflow:hidden;
+            background:
+                repeating-linear-gradient(135deg, rgba(245,255,91,.12), rgba(245,255,91,.12) 1px, transparent 1px, transparent 10px),
+                radial-gradient(circle at top, rgba(79,255,234,.34), transparent 60%),
+                linear-gradient(140deg,#151832,#050617);
+            position:relative;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        /* Logo im Hero Preview (größer) */
+        .hero-preview img.hero-logo{
+            width:88%;
+            height:88%;
+            object-fit:contain;
+        }
+
+        .hero-caption{
+            margin-top:.85rem;
+            padding:.75rem .85rem;
+            border-radius:16px;
+            background:rgba(2,3,16,.96);
+            border:1px solid rgba(255,255,255,.1);
+            font-size:.78rem;
+            color:var(--muted);
+        }
+
+        .caption-tags{
+            margin-top:.55rem;
+            display:flex;
+            flex-wrap:wrap;
+            gap:.4rem;
+        }
+
+        .caption-tags span{
+            border-radius:var(--radius-full);
+            border:1px solid rgba(245,255,91,.5);
+            padding:.22rem .6rem;
+            font-size:.72rem;
+            color:var(--accent);
+            background:rgba(0,0,0,.2);
+        }
+
+        .hero-floating-pill{
+            position:absolute;
+            font-size:.7rem;
+            padding:.4rem .8rem;
+            border-radius:var(--radius-full);
+            border:1px solid rgba(255,255,255,.25);
+            background:rgba(5,7,28,.92);
+            color:var(--muted);
+            box-shadow:var(--shadow-subtle);
+        }
+
+        .hero-floating-pill-1{ top:-10px; right:8%; }
+        .hero-floating-pill-2{ bottom:-10px; left:2%; }
+
+        @keyframes float{
+            0% { transform:translateY(0px) translateX(0); }
+            100% { transform:translateY(-10px) translateX(4px); }
+        }
+
+        /* Buttons */
+        .btn{
+            position:relative;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            padding:.7rem 1.55rem;
+            font-size:.9rem;
+            font-weight:500;
+            border-radius:var(--radius-full);
+            border:1px solid transparent;
+            text-decoration:none;
+            cursor:pointer;
+            transition:transform .15s ease-out, box-shadow .15s ease-out, background .15s ease-out, border-color .15s ease-out;
+            white-space:nowrap;
+        }
+
+        .btn-primary{
+            background:linear-gradient(120deg,var(--accent),var(--accent-2));
+            color:#050617;
+            box-shadow:var(--shadow-soft);
+            overflow:hidden;
+        }
+
+        .btn-primary:hover{
+            transform:translateY(-1px) scale(1.01);
+            box-shadow:0 22px 60px rgba(0,0,0,.85);
+        }
+
+        .btn-glow{
+            position:absolute;
+            inset:0;
+            background:radial-gradient(circle at top left, rgba(255,255,255,.7), transparent 52%);
+            mix-blend-mode:soft-light;
+            opacity:0;
+            transition:opacity .2s ease-out;
+        }
+
+        .btn-primary:hover .btn-glow{ opacity:1; }
+
+        .btn-ghost{
+            background:rgba(5,7,24,.9);
+            border-color:rgba(245,255,91,.5);
+            color:var(--text);
+        }
+
+        .btn-ghost:hover{ background:rgba(245,255,91,.08); }
+
+        /* Sections */
+        .section{ padding:3.7rem 0; }
+
+        .section-dark{
+            background:radial-gradient(circle at top,#141634 0,#020310 40%,#000 100%);
+        }
+
+        .section-header{
+            text-align:center;
+            max-width:640px;
+            margin:0 auto 2.1rem;
+        }
+
+        .section-pill{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            padding:.22rem .7rem;
+            border-radius:var(--radius-full);
+            font-size:.74rem;
+            letter-spacing:.22em;
+            text-transform:uppercase;
+            color:var(--accent);
+            border:1px solid rgba(245,255,91,.5);
+            background:rgba(2,3,16,.8);
+        }
+
+        .section-header h2{
+            margin:.9rem 0 .35rem;
+            font-size:1.7rem;
+        }
+
+        .section-header p{
+            margin:0;
+            color:var(--muted);
+            font-size:.95rem;
+        }
+
+        .cards-grid{
+            display:grid;
+            gap:1.6rem;
+        }
+
+        .card{
+            border-radius:var(--radius-xl);
+            padding:1.6rem 1.4rem;
+            border:1px solid var(--border);
+            background:rgba(4,6,30,.96);
+            box-shadow:var(--shadow-subtle);
+        }
+
+        .card-gradient{
+            background:linear-gradient(135deg, rgba(245,255,91,.16), rgba(2,3,16,.98));
+            border-color:rgba(245,255,91,.65);
+        }
+
+        .card-glass{
+            background:radial-gradient(circle at top left, rgba(79,255,234,.18), transparent 60%),
+                       rgba(4,6,30,.98);
+        }
+
+        .card-icon{
+            width:36px;height:36px;
+            border-radius:var(--radius-full);
+            background:rgba(0,0,0,.28);
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            margin-bottom:.6rem;
+            font-size:1.4rem;
+        }
+
+        .card h3{ margin:0 0 .6rem; font-size:1.15rem; }
+        .card p{ margin:0 0 .8rem; color:var(--muted); font-size:.9rem; }
+
+        .card-list{
+            list-style:none;
+            margin:0;
+            padding:0;
+            display:grid;
+            gap:.35rem;
+            font-size:.86rem;
+            color:var(--text);
+        }
+
+        .card-list li::before{
+            content:"•";
+            margin-right:.45rem;
+            color:var(--accent);
+        }
+
+        /* Portfolio */
+        .portfolio-grid{
+            display:grid;
+            gap:1.6rem;
+        }
+
+        .portfolio-item{
+            border-radius:var(--radius-xl);
+            overflow:hidden;
+            border:1px solid var(--border);
+            background:rgba(5,6,24,.96);
+            box-shadow:var(--shadow-subtle);
+            display:flex;
+            flex-direction:column;
+        }
+
+        /* Beispielbilder: volle Größe sichtbar */
+        .portfolio-thumb{
+            height:220px;
+            background-size:contain;
+            background-position:center;
+            background-repeat:no-repeat;
+            background-color:#050617;
+        }
+
+        .thumb-1{ background-image:url("schaufensterdoener.jpg"); }
+        .thumb-2{ background-image:url("autobeklebung.jpg"); }
+        .thumb-3{ background-image:url("shirtbeklebung.jpg"); }
+
+        .portfolio-info{ padding:1rem 1.2rem 1.2rem; }
+        .portfolio-info h3{ margin:0 0 .4rem; font-size:1rem; }
+        .portfolio-info p{ margin:0; font-size:.88rem; color:var(--muted); }
+
+        /* CTA */
+        .section-cta{ padding-bottom:4.1rem; }
+
+        .cta-inner{
+            border-radius:var(--radius-xl);
+            border:1px solid rgba(245,255,91,.5);
+            background:radial-gradient(circle at top left, rgba(245,255,91,.25), transparent 65%),
+                       linear-gradient(140deg,#191b40,#050617);
+            box-shadow:var(--shadow-soft);
+            padding:1.9rem 1.7rem;
+            display:grid;
+            gap:1.3rem;
+        }
+
+        .cta-text h2{ margin:0 0 .5rem; font-size:1.5rem; }
+        .cta-text p{ margin:0; color:var(--muted); font-size:.96rem; }
+        .cta-actions{ display:flex; flex-wrap:wrap; gap:.9rem; }
+
+        /* Footer */
+        .site-footer{
+            border-top:1px solid var(--border);
+            background:var(--bg-deep);
+            padding:1.7rem 0 1.9rem;
+        }
+
+        .footer-inner{
+            display:flex;
+            flex-direction:column;
+            gap:1.4rem;
+        }
+
+        .footer-brand{
+            display:flex;
+            align-items:center;
+            gap:.7rem;
+        }
+
+        .footer-logo-mark{ width:34px; height:34px; }
+
+        .footer-brand-text span{
+            display:block;
+            font-size:.94rem;
+            font-weight:500;
+        }
+
+        .footer-brand-text small{
+            font-size:.75rem;
+            color:var(--muted);
+        }
+
+        .footer-copy{
+            margin:.4rem 0 0;
+            font-size:.8rem;
+            color:var(--muted);
+        }
+
+        .footer-right{
+            display:flex;
+            flex-direction:column;
+            gap:.7rem;
+            align-items:flex-start;
+        }
+
+        .footer-links{
+            display:flex;
+            flex-wrap:wrap;
+            gap:1rem;
+            font-size:.86rem;
+        }
+
+        .footer-links a{
+            color:var(--muted);
+            text-decoration:none;
+        }
+
+        .footer-links a:hover{ color:var(--accent); }
+
+        .footer-social{ font-size:.86rem; }
+
+        .footer-social a{
+            color:var(--accent);
+            text-decoration:none;
+        }
+
+        .footer-social a:hover{ text-decoration:underline; }
+
+        /* Responsive */
+        @media (min-width:768px){
+            .main-nav{ display:block; }
+            .burger{ display:none; }
+            .mobile-nav,.nav-overlay{ display:none; }
+
+            .hero{ padding-top:6rem; }
+            .hero-inner{
+                grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+                align-items:center;
+            }
+            .hero-meta{
+                grid-template-columns:repeat(3,minmax(0,1fr));
+                max-width:none;
+            }
+            .cards-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+            .portfolio-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+
+            .cta-inner{
+                grid-template-columns:minmax(0,2.2fr) minmax(0,1.4fr);
+                align-items:center;
+                padding:2.3rem 2.2rem;
+            }
+            .footer-inner{
+                flex-direction:row;
+                align-items:center;
+                justify-content:space-between;
+            }
+            .footer-right{ align-items:flex-end; }
+        }
+
+        @media (min-width:1024px){
+            .hero{ padding-top:6.7rem; }
+            .hero-preview{ height:260px; }
+            .meta-item{ max-width:none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-orbit bg-orbit-1"></div>
+    <div class="bg-orbit bg-orbit-2"></div>
+    <div class="bg-orbit bg-orbit-3"></div>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="#home" class="logo">
+                <span class="logo-mark"><span class="logo-mark-inner">∞</span></span>
+                <span class="logo-text">
+                    <span class="logo-title">Infinity Design</span>
+                    <small>ENTWICKELT FÜR DEINE VISION</small>
+                </span>
+            </a>
+
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="#home" class="active">Startseite</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </nav>
+
+            <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+
+        <!-- Mobile-Menü -->
+        <nav class="mobile-nav" id="mobileNav" aria-label="Mobile Navigation">
+            <div class="mobile-nav-inner">
+
+                <div class="mobile-top">
+                    <a href="#home" class="mobile-logo">
+                        <span class="logo-mark"><span class="logo-mark-inner">∞</span></span>
+                        <span class="logo-title">Infinity Design</span>
+                    </a>
+                    <button class="mobile-close" id="mobileClose" aria-label="Menü schließen">✕</button>
+                </div>
+
+                <ul>
+                    <li><a href="#home">Startseite</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="nav-overlay" id="navOverlay"></div>
+    </header>
+
+    <main id="home">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container hero-inner">
+                <div class="hero-text">
+                    <p class="hero-eyebrow">Werbetechnik • Branding • Textildruck</p>
+                    <h1 id="hero-title">Deine Marke, <span class="hero-highlight">unendlich sichtbar</span>.</h1>
+                    <p class="hero-subtitle">
+                        Infinity Design ist dein Partner für <strong>Ladenflächen</strong>,
+                        <strong>Sticker & Aufkleber</strong> und <strong>T-Shirt Beflockung</strong> –
+                        vom ersten Entwurf bis zum fertigen Produkt.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="shop.html" class="btn btn-primary">Zum Shop<span class="btn-glow"></span></a>
+                        <a href="kontakt.html" class="btn btn-ghost">Projekt anfragen</a>
+                    </div>
+
+                    <div class="hero-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">+ Branding</span>
+                            <span class="meta-value">Ladenfronten & Schaufenster</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">+ Merchandise</span>
+                            <span class="meta-value">Sticker, Aufkleber & Textilien</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">+ Lokal</span>
+                            <span class="meta-value">Individuelle Projekte, echte Nähe</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <div class="hero-card-inner">
+                            <div class="hero-preview">
+                                <img class="hero-logo" src="logo.png" alt="Infinity Design Logo">
+                            </div>
+                            <div class="hero-caption">
+                                <p>Schaufenster, Sticker, Textildruck – alles aus einer Hand. Perfekt abgestimmt auf deine Marke.</p>
+                                <div class="caption-tags">
+                                    <span>#Ladenfläche</span>
+                                    <span>#Sticker</span>
+                                    <span>#Textildruck</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-floating-pill hero-floating-pill-1">Individuelles Branding</div>
+                        <div class="hero-floating-pill hero-floating-pill-2">Produktion & Montage</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="leistungen" aria-labelledby="leistungen-title">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-pill">Leistungen</span>
+                    <h2 id="leistungen-title">Was wir für dich umsetzen</h2>
+                    <p>
+                        Von der Idee bis zur fertigen Fläche: Wir gestalten, produzieren und montieren deine
+                        Werbemittel – damit dein Auftritt nicht nur gut aussieht, sondern sich auch gut anfühlt.
+                    </p>
+                </div>
+
+                <div class="cards-grid">
+                    <article class="card card-gradient">
+                        <div class="card-icon">🏪</div>
+                        <h3>Ladenflächen & Schaufenster</h3>
+                        <p>Aussagekräftige Schaufenster, Türen und Innenräume, die deine Marke sofort erkennbar machen.</p>
+                        <ul class="card-list">
+                            <li>Schaufensterfolien & Glasdekor</li>
+                            <li>Öffnungszeiten & Logo-Beschriftung</li>
+                            <li>Aktionen & saisonale Kampagnen</li>
+                        </ul>
+                    </article>
+
+                    <article class="card card-glass">
+                        <div class="card-icon">✨</div>
+                        <h3>Sticker & Aufkleber</h3>
+                        <p>Sticker in allen Formen & Größen – für Produkte, Packaging, Fahrzeuge oder als Merch.</p>
+                        <ul class="card-list">
+                            <li>Indoor & Outdoor geeignet</li>
+                            <li>Freiform, Kontur, Bogen & Rolle</li>
+                            <li>Branding, Give-aways & Sets</li>
+                        </ul>
+                    </article>
+
+                    <article class="card card-glass">
+                        <div class="card-icon">👕</div>
+                        <h3>T-Shirt Beflockung</h3>
+                        <p>Hochwertige Beflockung und Textildruck für Teams, Events & Markenauftritte.</p>
+                        <ul class="card-list">
+                            <li>Shirts, Hoodies & Workwear</li>
+                            <li>Vereine, Firmen & Crews</li>
+                            <li>Einzelstücke & Serienproduktion</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-dark" id="portfolio" aria-labelledby="portfolio-title">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-pill">Projekte</span>
+                    <h2 id="portfolio-title">Einblicke in unsere Arbeit</h2>
+                    <p>Hier kannst du später Bilder aus eurem Instagram einspeisen – die Kacheln sind vorbereitet.</p>
+                </div>
+
+                <div class="portfolio-grid">
+                    <article class="portfolio-item">
+                        <div class="portfolio-thumb thumb-1"></div>
+                        <div class="portfolio-info">
+                            <h3>Schaufensterbeklebung</h3>
+                            <p>Markante Schaufensterbeklebung mit Logo, Öffnungszeiten und aufmerksamkeitsstarken Grafikflächen.</p>
+                        </div>
+                    </article>
+
+                    <article class="portfolio-item">
+                        <div class="portfolio-thumb thumb-2"></div>
+                        <div class="portfolio-info">
+                            <h3>Sticker & Aufkleber</h3>
+                            <p>Passende Sticker für dein Branding – auch optimal für Fahrzeugbeklebungen.</p>
+                        </div>
+                    </article>
+
+                    <article class="portfolio-item">
+                        <div class="portfolio-thumb thumb-3"></div>
+                        <div class="portfolio-info">
+                            <h3>Team- & Event-Shirts</h3>
+                            <p>Beklebte Shirts für Teams, Events & Crews – langlebig, klar & gut lesbar.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-cta" aria-labelledby="cta-title">
+            <div class="container">
+                <div class="cta-inner">
+                    <div class="cta-text">
+                        <h2 id="cta-title">Bereit, deine Marke zu zeigen?</h2>
+                        <p>Erzähle uns von deinem Projekt – wir melden uns mit Ideen, Vorschlägen und einem klaren Plan.</p>
+                    </div>
+                    <div class="cta-actions">
+                        <a href="kontakt.html" class="btn btn-primary">Kontakt aufnehmen<span class="btn-glow"></span></a>
+                        <a href="https://www.instagram.com/infinitydesign.werbung/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">
+                            Instagram ansehen
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-left">
+                <div class="footer-brand">
+                    <span class="logo-mark footer-logo-mark"><span class="logo-mark-inner">∞</span></span>
+                    <div class="footer-brand-text">
+                        <span>Infinity Design</span>
+                        <small>ENTWICKELT FÜR DEINE VISION</small>
+                    </div>
+                </div>
+                <p class="footer-copy">© <span id="year"></span> Infinity Design. Alle Rechte vorbehalten.</p>
+            </div>
+
+            <div class="footer-right">
+                <nav class="footer-links">
+                    <a href="#home">Startseite</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="kontakt.html">Kontakt</a>
+                    <a href="impressum.html">Impressum</a>
+                    <a href="datenschutz.html">Datenschutz</a>
+                </nav>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/infinitydesign.werbung/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const burger = document.getElementById('burger');
+        const mobileNav = document.getElementById('mobileNav');
+        const navOverlay = document.getElementById('navOverlay');
+        const mobileClose = document.getElementById('mobileClose');
+
+        function closeNav(){
+            burger.classList.remove('open');
+            burger.setAttribute('aria-expanded','false');
+            mobileNav.classList.remove('open');
+            navOverlay.classList.remove('open');
+            document.body.classList.remove('nav-open');
+        }
+
+        function openNav(){
+            burger.classList.add('open');
+            burger.setAttribute('aria-expanded','true');
+            mobileNav.classList.add('open');
+            navOverlay.classList.add('open');
+            document.body.classList.add('nav-open');
+        }
+
+        if(burger && mobileNav && navOverlay){
+            burger.addEventListener('click', () => {
+                const isOpen = mobileNav.classList.contains('open');
+                if(isOpen) closeNav();
+                else openNav();
+            });
+
+            navOverlay.addEventListener('click', closeNav);
+            mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+
+            if(mobileClose){
+                mobileClose.addEventListener('click', closeNav);
+            }
+
+            // ESC schließt
+            document.addEventListener('keydown', (e) => {
+                if(e.key === 'Escape') closeNav();
+            });
+        }
+
+        const yearSpan = document.getElementById('year');
+        if(yearSpan) yearSpan.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

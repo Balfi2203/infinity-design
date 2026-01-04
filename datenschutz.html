@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Datenschutz – Infinity Design</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ====== BASE ====== */
+
+        *,
+        *::before,
+        *::after { box-sizing: border-box; }
+
+        :root{
+            --bg:#020310;
+            --bg-alt:#07081a;
+            --bg-deep:#02020a;
+            --accent:#f5ff5b;
+            --accent-soft:rgba(245,255,91,.16);
+            --accent-2:#ff4f93;
+            --accent-3:#4fffea;
+            --text:#f9fafb;
+            --muted:#9ca3af;
+            --border:rgba(255,255,255,.09);
+            --radius-lg:20px;
+            --radius-xl:26px;
+            --radius-full:999px;
+            --shadow-soft:0 18px 50px rgba(0,0,0,.75);
+            --shadow-subtle:0 10px 30px rgba(0,0,0,.5);
+        }
+
+        html,body{
+            margin:0;
+            padding:0;
+            min-height:100%;
+            scroll-behavior:smooth;
+        }
+
+        body{
+            font-family:"Poppins",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+            color:var(--text);
+            background:radial-gradient(circle at top,#181a40 0,#020310 50%,#000 100%);
+            overflow-x:hidden;
+        }
+
+        .container{
+            max-width:1160px;
+            margin:0 auto;
+            padding:0 1.6rem;
+        }
+
+        /* ====== BACKGROUND ORBITS ====== */
+
+        .bg-orbit{
+            position:fixed;
+            z-index:-1;
+            border-radius:50%;
+            filter:blur(22px);
+            opacity:.7;
+            pointer-events:none;
+        }
+        .bg-orbit-1{
+            width:420px;height:420px;
+            background:radial-gradient(circle,rgba(245,255,91,.28),transparent 60%);
+            top:-120px;left:-100px;
+        }
+        .bg-orbit-2{
+            width:380px;height:380px;
+            background:radial-gradient(circle,rgba(79,255,234,.22),transparent 60%);
+            bottom:-140px;right:-80px;
+        }
+        .bg-orbit-3{
+            width:260px;height:260px;
+            background:radial-gradient(circle,rgba(255,79,147,.32),transparent 60%);
+            top:40%;right:10%;
+        }
+
+        /* ====== HEADER & NAV ====== */
+
+        .site-header{
+            position:sticky;
+            top:0;
+            z-index:100;
+            backdrop-filter:blur(22px);
+            background:linear-gradient(to bottom,rgba(2,3,16,.95),rgba(2,3,16,.82),transparent);
+            border-bottom:1px solid var(--border);
+        }
+
+        .header-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:.75rem 0;
+        }
+
+        .logo{
+            display:flex;
+            align-items:center;
+            gap:.8rem;
+            text-decoration:none;
+            color:var(--text);
+        }
+
+        .logo-mark{
+            width:40px;height:40px;
+            border-radius:var(--radius-full);
+            padding:2px;
+            background:conic-gradient(from 220deg,var(--accent),var(--accent-2),var(--accent-3),var(--accent));
+            box-shadow:0 0 24px rgba(245,255,91,.5);
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .logo-mark-inner{
+            width:100%;height:100%;
+            border-radius:var(--radius-full);
+            background:#050617;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            font-family:"Space Grotesk",system-ui,sans-serif;
+            font-size:1.3rem;
+            font-weight:700;
+        }
+
+        .logo-text{
+            display:flex;
+            flex-direction:column;
+            line-height:1.1;
+        }
+
+        .logo-title{
+            font-family:"Space Grotesk",system-ui,sans-serif;
+            font-weight:600;
+            font-size:1.05rem;
+            letter-spacing:.06em;
+            text-transform:uppercase;
+        }
+
+        .logo-text small{
+            font-size:.7rem;
+            color:var(--muted);
+        }
+
+        .main-nav{ display:none; }
+
+        .nav-links{
+            list-style:none;
+            display:flex;
+            gap:2rem;
+            margin:0;
+            padding:0;
+        }
+
+        .nav-links a{
+            text-decoration:none;
+            color:var(--muted);
+            font-size:.9rem;
+            letter-spacing:.16em;
+            text-transform:uppercase;
+            position:relative;
+            padding-bottom:.35rem;
+        }
+
+        .nav-links a::after{
+            content:"";
+            position:absolute;
+            left:0;bottom:0;
+            height:2px;width:0;
+            background:linear-gradient(90deg,var(--accent),var(--accent-2));
+            border-radius:999px;
+            transition:width .18s ease-out;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after{ width:100%; }
+
+        .nav-links a:hover,
+        .nav-links a.active{ color:var(--text); }
+
+        /* Burger */
+        .burger{
+            border:none;
+            background:transparent;
+            display:flex;
+            flex-direction:column;
+            gap:5px;
+            cursor:pointer;
+            padding:.35rem;
+        }
+
+        .burger span{
+            display:block;
+            width:22px;height:2px;
+            background:var(--text);
+            border-radius:var(--radius-full);
+            transition:transform .25s ease, opacity .25s ease, width .25s ease;
+        }
+
+        .burger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+        .burger.open span:nth-child(2){ opacity:0; width:0; }
+        .burger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+        /* ====== MOBILE NAV (DUNKELBLAU + DECKT ALLES AB) ====== */
+
+        .mobile-nav{
+            position:fixed;
+            inset:0 0 0 auto;
+            width:78%;
+            max-width:330px;
+            transform:translateX(100%);
+            background:linear-gradient(180deg, #0b1030 0%, #020310 100%); /* dunkelblau */
+            border-left:1px solid rgba(255,255,255,.10);
+            transition:transform .3s ease-in-out;
+            z-index:1001; /* WICHTIG: über Header */
+        }
+
+        .mobile-nav::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:radial-gradient(circle at top left, rgba(245,255,91,.12), transparent 55%);
+            pointer-events:none;
+        }
+
+        .mobile-nav-inner{
+            position:relative;
+            height:100%;
+            padding:1.4rem 1.5rem 1.7rem;
+            display:flex;
+            flex-direction:column;
+            justify-content:flex-start;
+            gap:1.4rem;
+        }
+
+        .mobile-top{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1rem;
+        }
+
+        .mobile-logo{
+            display:flex;
+            align-items:center;
+            gap:.75rem;
+            color:var(--text);
+            text-decoration:none;
+            margin-bottom:0;
+        }
+
+        .mobile-logo .logo-title{ font-size:.95rem; }
+
+        .mobile-close{
+            border:none;
+            background:rgba(255,255,255,.07);
+            color:#fff;
+            width:44px;
+            height:44px;
+            border-radius:999px;
+            font-size:1.2rem;
+            cursor:pointer;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .mobile-close:hover{
+            background:rgba(245,255,91,.12);
+        }
+
+        .mobile-nav ul{
+            list-style:none;
+            margin:0;
+            padding:0;
+            display:flex;
+            flex-direction:column;
+            gap:1.25rem;
+        }
+
+        .mobile-nav a{
+            color:var(--text);
+            text-decoration:none;
+            font-size:.9rem;
+            letter-spacing:.18em;
+            text-transform:uppercase;
+        }
+
+        .mobile-nav a:hover{ color:var(--accent); }
+
+        .mobile-nav.open{ transform:translateX(0); }
+
+        /* Overlay (deckt alles ab, auch Header) */
+        .nav-overlay{
+            position:fixed;
+            inset:0;
+            background:rgba(2, 5, 30, 0.90); /* dunkles Blau -> besser lesbar */
+            opacity:0;
+            visibility:hidden;
+            transition:opacity .25s ease-out, visibility .25s ease-out;
+            z-index:1000; /* WICHTIG: über Header */
+        }
+
+        .nav-overlay.open{
+            opacity:1;
+            visibility:visible;
+        }
+
+        body.nav-open{ overflow:hidden; }
+
+        /* Header neutralisieren, wenn Menü offen (kein Blur/kein Verlauf) */
+        body.nav-open .site-header{
+            backdrop-filter:none;
+            background:#020310;
+        }
+
+        /* ====== HERO ====== */
+
+        .hero{ padding:5.5rem 0 4.2rem; }
+
+        .hero-inner{
+            display:grid;
+            grid-template-columns:minmax(0,1.2fr);
+            gap:2.8rem;
+        }
+
+        .hero-text{ max-width:760px; }
+
+        .hero-eyebrow{
+            margin:0 0 .7rem;
+            text-transform:uppercase;
+            letter-spacing:.28em;
+            font-size:.75rem;
+            color:var(--muted);
+        }
+
+        .hero h1{
+            margin:0 0 .9rem;
+            font-size:clamp(2.4rem,6vw,3.5rem);
+            font-family:"Space Grotesk",system-ui,sans-serif;
+            line-height:1.05;
+        }
+
+        .hero-highlight{
+            background:linear-gradient(120deg,var(--accent),var(--accent-2),var(--accent-3));
+            -webkit-background-clip:text;
+            background-clip:text;
+            color:transparent;
+        }
+
+        .hero-subtitle{
+            margin:0 0 1.6rem;
+            color:var(--muted);
+            font-size:.98rem;
+        }
+
+        /* Buttons */
+        .btn{
+            position:relative;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            padding:.7rem 1.55rem;
+            font-size:.9rem;
+            font-weight:500;
+            border-radius:var(--radius-full);
+            border:1px solid transparent;
+            text-decoration:none;
+            cursor:pointer;
+            transition:transform .15s ease-out, box-shadow .15s ease-out, background .15s ease-out, border-color .15s ease-out;
+            white-space:nowrap;
+        }
+
+        .btn-primary{
+            background:linear-gradient(120deg,var(--accent),var(--accent-2));
+            color:#050617;
+            box-shadow:var(--shadow-soft);
+            overflow:hidden;
+        }
+
+        .btn-glow{
+            position:absolute;
+            inset:0;
+            background:radial-gradient(circle at top left, rgba(255,255,255,.7), transparent 52%);
+            mix-blend-mode:soft-light;
+            opacity:0;
+            transition:opacity .2s ease-out;
+        }
+
+        .btn-primary:hover .btn-glow{ opacity:1; }
+
+        .btn-ghost{
+            background:rgba(5,7,24,.9);
+            border-color:rgba(245,255,91,.5);
+            color:var(--text);
+        }
+
+        .btn-ghost:hover{ background:rgba(245,255,91,.08); }
+
+        /* Sections */
+        .section{ padding:3.7rem 0; }
+
+        .section-header{
+            text-align:center;
+            max-width:640px;
+            margin:0 auto 2.1rem;
+        }
+
+        .section-pill{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            padding:.22rem .7rem;
+            border-radius:var(--radius-full);
+            font-size:.74rem;
+            letter-spacing:.22em;
+            text-transform:uppercase;
+            color:var(--accent);
+            border:1px solid rgba(245,255,91,.5);
+            background:rgba(2,3,16,.8);
+        }
+
+        .section-header h2{
+            margin:.9rem 0 .35rem;
+            font-size:1.7rem;
+        }
+
+        .section-header p{
+            margin:0;
+            color:var(--muted);
+            font-size:.95rem;
+        }
+
+        .card{
+            border-radius:var(--radius-xl);
+            padding:1.6rem 1.4rem;
+            border:1px solid var(--border);
+            background:rgba(4,6,30,.96);
+            box-shadow:var(--shadow-subtle);
+        }
+
+        .card h2{
+            margin:0 0 .8rem;
+            font-size:1.25rem;
+            font-family:"Space Grotesk",system-ui,sans-serif;
+        }
+
+        .card h3{
+            margin:1.25rem 0 .55rem;
+            font-size:1.02rem;
+            font-family:"Space Grotesk",system-ui,sans-serif;
+        }
+
+        .card p{ margin:.3rem 0 .85rem; color:var(--muted); font-size:.92rem; line-height:1.65; }
+
+        .card a{ color:var(--accent); text-decoration:none; }
+        .card a:hover{ text-decoration:underline; }
+
+        .clean-list{
+            list-style:none;
+            padding:0;
+            margin:.2rem 0 1rem;
+            display:grid;
+            gap:.35rem;
+            font-size:.9rem;
+        }
+        .clean-list li{
+            color:var(--muted);
+        }
+        .clean-list li::before{
+            content:"•";
+            margin-right:.45rem;
+            color:var(--accent);
+        }
+
+        .notice{
+            margin-top:1rem;
+            padding:.9rem 1rem;
+            border-radius:16px;
+            border:1px solid rgba(245,255,91,.35);
+            background:radial-gradient(circle at top left, rgba(245,255,91,.12), transparent 65%),
+                       rgba(2,3,16,.75);
+        }
+        .notice p{ margin:0; color:var(--text); opacity:.9; }
+
+        /* Footer */
+        .site-footer{
+            border-top:1px solid var(--border);
+            background:var(--bg-deep);
+            padding:1.7rem 0 1.9rem;
+        }
+
+        .footer-inner{
+            display:flex;
+            flex-direction:column;
+            gap:1.4rem;
+        }
+
+        .footer-brand{
+            display:flex;
+            align-items:center;
+            gap:.7rem;
+        }
+
+        .footer-logo-mark{ width:34px; height:34px; }
+
+        .footer-brand-text span{
+            display:block;
+            font-size:.94rem;
+            font-weight:500;
+        }
+
+        .footer-brand-text small{
+            font-size:.75rem;
+            color:var(--muted);
+        }
+
+        .footer-copy{
+            margin:.4rem 0 0;
+            font-size:.8rem;
+            color:var(--muted);
+        }
+
+        .footer-right{
+            display:flex;
+            flex-direction:column;
+            gap:.7rem;
+            align-items:flex-start;
+        }
+
+        .footer-links{
+            display:flex;
+            flex-wrap:wrap;
+            gap:1rem;
+            font-size:.86rem;
+        }
+
+        .footer-links a{
+            color:var(--muted);
+            text-decoration:none;
+        }
+
+        .footer-links a:hover{ color:var(--accent); }
+
+        .footer-social{ font-size:.86rem; }
+
+        .footer-social a{
+            color:var(--accent);
+            text-decoration:none;
+        }
+
+        .footer-social a:hover{ text-decoration:underline; }
+
+        /* Responsive */
+        @media (min-width:768px){
+            .main-nav{ display:block; }
+            .burger{ display:none; }
+            .mobile-nav,.nav-overlay{ display:none; }
+
+            .hero{ padding-top:6rem; }
+        }
+
+        @media (min-width:1024px){
+            .hero{ padding-top:6.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-orbit bg-orbit-1"></div>
+    <div class="bg-orbit bg-orbit-2"></div>
+    <div class="bg-orbit bg-orbit-3"></div>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-mark"><span class="logo-mark-inner">∞</span></span>
+                <span class="logo-text">
+                    <span class="logo-title">Infinity Design</span>
+                    <small>ENTWICKELT FÜR DEINE VISION</small>
+                </span>
+            </a>
+
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                    <li><a href="impressum.html">Impressum</a></li>
+                    <li><a href="datenschutz.html" class="active">Datenschutz</a></li>
+                </ul>
+            </nav>
+
+            <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+
+        <!-- Mobile-Menü -->
+        <nav class="mobile-nav" id="mobileNav" aria-label="Mobile Navigation">
+            <div class="mobile-nav-inner">
+
+                <div class="mobile-top">
+                    <a href="index.html" class="mobile-logo">
+                        <span class="logo-mark"><span class="logo-mark-inner">∞</span></span>
+                        <span class="logo-title">Infinity Design</span>
+                    </a>
+                    <button class="mobile-close" id="mobileClose" aria-label="Menü schließen">✕</button>
+                </div>
+
+                <ul>
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                    <li><a href="impressum.html">Impressum</a></li>
+                    <li><a href="datenschutz.html">Datenschutz</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="nav-overlay" id="navOverlay"></div>
+    </header>
+
+    <main id="home">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container hero-inner">
+                <div class="hero-text">
+                    <p class="hero-eyebrow">Rechtliches • DSGVO • Transparenz</p>
+                    <h1 id="hero-title">Datenschutzerklärung <span class="hero-highlight">Infinity Design</span></h1>
+                    <p class="hero-subtitle">
+                        Hier informieren wir dich darüber, welche personenbezogenen Daten wir auf dieser Website verarbeiten,
+                        wofür wir sie verwenden und welche Rechte du hast.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" aria-label="Datenschutz Inhalte">
+            <div class="container">
+                <article class="card">
+                    <span class="section-pill">Überblick</span>
+
+                    <h3>1. Verantwortlicher</h3>
+                    <p>
+                        Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:<br>
+                        <strong>Infinity Design</strong><br>
+                        Inhaber: Jermaine Richter<br>
+                        Alte Lauinger Straße 7, 89423 Gundelfingen an der Donau, Deutschland<br>
+                        Telefon: 0170/3203136<br>
+                        E-Mail: <a href="mailto:InfinityDesign24@outlook.de">InfinityDesign24@outlook.de</a><br>
+                        Steuernummer: 109/632/01422
+                    </p>
+
+                    <h3>2. Allgemeine Hinweise zur Datenverarbeitung</h3>
+                    <p>
+                        Wir verarbeiten personenbezogene Daten nur, soweit dies zur Bereitstellung einer funktionsfähigen Website,
+                        zur Kommunikation, zur Erfüllung von Verträgen oder aufgrund gesetzlicher Pflichten erforderlich ist.
+                        Rechtsgrundlagen sind insbesondere Art. 6 Abs. 1 lit. b (Vertrag/Anbahnung), lit. c (rechtliche Pflicht)
+                        und lit. f DSGVO (berechtigtes Interesse).
+                    </p>
+
+                    <h3>3. Hosting & Server-Logfiles</h3>
+                    <p>
+                        Beim Aufruf unserer Website werden durch den Hosting-Provider automatisch Informationen in sogenannten
+                        Server-Logfiles erhoben und gespeichert. Dies sind z. B.:
+                    </p>
+                    <ul class="clean-list">
+                        <li>IP-Adresse (ggf. in gekürzter/teilanonymisierter Form, je nach Provider)</li>
+                        <li>Datum und Uhrzeit der Anfrage</li>
+                        <li>aufgerufene Seite/Datei</li>
+                        <li>Browsertyp/-version, Betriebssystem</li>
+                        <li>Referrer-URL (zuvor besuchte Seite)</li>
+                    </ul>
+                    <p>
+                        Zweck ist die technische Auslieferung der Website, Stabilität, Sicherheit (z. B. Abwehr von Angriffen)
+                        und Fehleranalyse. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+                        Logdaten werden in der Regel für einen begrenzten Zeitraum gespeichert und anschließend gelöscht,
+                        sofern keine sicherheitsrelevante Aufbewahrung erforderlich ist.
+                    </p>
+
+                    <h3>4. Kontaktaufnahme (E-Mail/Telefon/Kontaktformular)</h3>
+                    <p>
+                        Wenn du uns per E-Mail, Telefon oder über ein Kontaktformular kontaktierst, verarbeiten wir die von dir
+                        übermittelten Daten (z. B. Name, E-Mail, Nachricht), um deine Anfrage zu bearbeiten.
+                        Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung/Erfüllung) bzw. Art. 6 Abs. 1 lit. f DSGVO
+                        (berechtigtes Interesse an der Beantwortung).
+                    </p>
+                    <p>
+                        Die Daten werden gelöscht, sobald sie für den Zweck der Bearbeitung nicht mehr erforderlich sind und
+                        keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
+                    </p>
+
+                    <h3>5. Shop / Vertragsabwicklung (falls du bei uns bestellst)</h3>
+                    <p>
+                        Wenn du über unseren Shop Produkte anfragst oder bestellst, verarbeiten wir personenbezogene Daten,
+                        die zur Vertragsabwicklung erforderlich sind (z. B. Name, Anschrift, Kontakt- und Bestelldaten).
+                        Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.
+                    </p>
+                    <p>
+                        Soweit wir Dienstleister einsetzen (z. B. Zahlungsanbieter, Versanddienstleister, Hosting/IT),
+                        erhalten diese Daten nur, soweit es für die jeweilige Leistung erforderlich ist (Auftragsverarbeitung).
+                        Bei gesetzlichen Aufbewahrungspflichten (z. B. Handels-/Steuerrecht) erfolgt die Speicherung entsprechend
+                        der Vorgaben.
+                    </p>
+
+                    <h3>6. Cookies & ähnliche Technologien</h3>
+                    <p>
+                        Unsere Website kann technisch notwendige Cookies einsetzen, um grundlegende Funktionen bereitzustellen.
+                        Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der technischen Bereitstellung).
+                    </p>
+                    <p>
+                        Soweit wir in Zukunft nicht-notwendige Cookies (z. B. Analyse/Marketing) einsetzen, erfolgt dies nur mit
+                        deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) über ein Cookie-Banner.
+                    </p>
+
+                    <h3>7. Webanalyse / Tracking</h3>
+                    <p>
+                        Aktuell setzen wir <strong>keine</strong> Webanalyse- oder Tracking-Tools (z. B. Google Analytics) ein.
+                        Sollten wir solche Tools zukünftig einsetzen, informieren wir dich hier und holen – sofern erforderlich –
+                        vorher deine Einwilligung ein.
+                    </p>
+
+                    <h3>8. Social Media – Instagram</h3>
+                    <p>
+                        Auf unserer Website verlinken wir zu unserem Instagram-Profil.
+                        Wenn du dem Link folgst, werden Daten an Instagram/Meta übermittelt.
+                        Verantwortlicher für die Datenverarbeitung auf Instagram ist der jeweilige Betreiber.
+                    </p>
+                    <p>
+                        Hinweis: Wenn wir nur einen normalen Link verwenden (keine eingebetteten Inhalte), findet eine Übermittlung
+                        an Instagram erst statt, wenn du den Link aktiv anklickst.
+                    </p>
+
+                    <h3>9. Eingebettete Inhalte (z. B. Videos, Karten)</h3>
+                    <p>
+                        Falls wir Inhalte von Drittanbietern (z. B. YouTube, Google Maps) einbetten, kann beim Laden der Einbettung
+                        deine IP-Adresse an den Drittanbieter übermittelt werden. Solche Einbettungen nutzen wir – falls eingesetzt –
+                        möglichst datenschutzfreundlich bzw. erst nach Einwilligung.
+                    </p>
+
+                    <h3>10. Empfänger von Daten</h3>
+                    <p>
+                        Wir geben personenbezogene Daten nur weiter, wenn dies erforderlich ist (z. B. zur Vertragsabwicklung),
+                        eine gesetzliche Pflicht besteht oder du eingewilligt hast.
+                        Mögliche Empfänger sind Hosting-/IT-Dienstleister, Zahlungs- und Versanddienstleister (bei Bestellungen).
+                    </p>
+
+                    <h3>11. Speicherdauer</h3>
+                    <p>
+                        Wir speichern personenbezogene Daten nur so lange, wie es für die jeweiligen Zwecke erforderlich ist
+                        oder gesetzliche Aufbewahrungspflichten bestehen. Danach werden die Daten gelöscht oder gesperrt.
+                    </p>
+
+                    <h3>12. Deine Rechte</h3>
+                    <p>Du hast nach der DSGVO insbesondere folgende Rechte:</p>
+                    <ul class="clean-list">
+                        <li>Auskunft (Art. 15 DSGVO)</li>
+                        <li>Berichtigung (Art. 16 DSGVO)</li>
+                        <li>Löschung (Art. 17 DSGVO)</li>
+                        <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+                        <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+                        <li>Widerspruch gegen Verarbeitungen auf Basis berechtigter Interessen (Art. 21 DSGVO)</li>
+                        <li>Widerruf einer Einwilligung jederzeit (Art. 7 Abs. 3 DSGVO)</li>
+                    </ul>
+                    <p>
+                        Zur Ausübung deiner Rechte genügt eine Nachricht an:
+                        <a href="mailto:InfinityDesign24@outlook.de">InfinityDesign24@outlook.de</a>.
+                    </p>
+
+                    <h3>13. Beschwerderecht bei der Aufsichtsbehörde</h3>
+                    <p>
+                        Du hast das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren (Art. 77 DSGVO).
+                        Für Bayern ist dies regelmäßig das <strong>Bayerische Landesamt für Datenschutzaufsicht (BayLDA)</strong>.
+                    </p>
+
+                    <h3>14. Datensicherheit / SSL-Verschlüsselung</h3>
+                    <p>
+                        Wir treffen technische und organisatorische Maßnahmen, um deine Daten zu schützen.
+                        Wenn unsere Website über HTTPS erreichbar ist, werden Daten verschlüsselt übertragen (SSL/TLS).
+                    </p>
+
+                    <h3>15. Änderungen dieser Datenschutzerklärung</h3>
+                    <p>
+                        Wir können diese Datenschutzerklärung anpassen, wenn sich unsere Website, Prozesse oder Rechtslagen ändern.
+                        Es gilt die jeweils aktuelle Version auf dieser Seite.
+                    </p>
+
+                    <h3>16. Umsetzung der Website</h3>
+                    <p>
+                        Die technische und gestalterische Umsetzung dieser Website erfolgte durch:<br>
+                        <strong>Fischer Leopold, Graf von Ballestrem Alexander GbR</strong>
+                    </p>
+                    <p>
+                        Die genannte GbR hat im Rahmen der Umsetzung keinen eigenständigen Zugriff auf personenbezogene
+                        Daten der Websitebesucher. Eine Verarbeitung personenbezogener Daten erfolgt ausschließlich
+                        durch den Verantwortlichen dieser Website.
+                    </p>
+
+                    <div class="notice">
+                        <p><strong>Stand:</strong> Januar 2026</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-left">
+                <div class="footer-brand">
+                    <span class="logo-mark footer-logo-mark"><span class="logo-mark-inner">∞</span></span>
+                    <div class="footer-brand-text">
+                        <span>Infinity Design</span>
+                        <small>ENTWICKELT FÜR DEINE VISION</small>
+                    </div>
+                </div>
+                <p class="footer-copy">© <span id="year"></span> Infinity Design. Alle Rechte vorbehalten.</p>
+            </div>
+
+            <div class="footer-right">
+                <nav class="footer-links">
+                    <a href="index.html">Startseite</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="kontakt.html">Kontakt</a>
+                    <a href="impressum.html">Impressum</a>
+                    <a href="datenschutz.html">Datenschutz</a>
+                </nav>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/infinitydesign.werbung/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const burger = document.getElementById('burger');
+        const mobileNav = document.getElementById('mobileNav');
+        const navOverlay = document.getElementById('navOverlay');
+        const mobileClose = document.getElementById('mobileClose');
+
+        function closeNav(){
+            burger.classList.remove('open');
+            burger.setAttribute('aria-expanded','false');
+            mobileNav.classList.remove('open');
+            navOverlay.classList.remove('open');
+            document.body.classList.remove('nav-open');
+        }
+
+        function openNav(){
+            burger.classList.add('open');
+            burger.setAttribute('aria-expanded','true');
+            mobileNav.classList.add('open');
+            navOverlay.classList.add('open');
+            document.body.classList.add('nav-open');
+        }
+
+        if(burger && mobileNav && navOverlay){
+            burger.addEventListener('click', () => {
+                const isOpen = mobileNav.classList.contains('open');
+                if(isOpen) closeNav();
+                else openNav();
+            });
+
+            navOverlay.addEventListener('click', closeNav);
+            mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+
+            if(mobileClose){
+                mobileClose.addEventListener('click', closeNav);
+            }
+
+            // ESC schließt
+            document.addEventListener('keydown', (e) => {
+                if(e.key === 'Escape') closeNav();
+            });
+        }
+
+        const yearSpan = document.getElementById('year');
+        if(yearSpan) yearSpan.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
